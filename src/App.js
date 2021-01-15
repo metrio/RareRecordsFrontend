@@ -1,4 +1,8 @@
-import React from 'react'
+import React from 'react';
+import './App.css';
+import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { addingtoWishlist } from './Redux/actions'
 import RecordCard from './Components/RecordCard';
 import SearchForm from './Components/SearchForm';
 
@@ -19,11 +23,22 @@ class App extends React.Component {
   }
 
   componentDidMount = (url) => {
-    fetch(`${url}`)
+    fetch(`${url}`, {
+      headers: {
+          "Accepts": "application/json",
+          "Content-Type": "application/json"
+      }
+    })
     .then(resp => resp.json())
     .then( query => {
       this.setState({data: query.results})
     })
+  }
+
+  submitAlbum = (details) => {
+
+    console.log(store.wishlist)
+      // props.addtoWishlist(details)
   }
 
 
@@ -34,11 +49,24 @@ class App extends React.Component {
       
       <div className="App">
         <SearchForm submitHandler={this.recordSearch}/>
-        {data.map(recordEl => <RecordCard id={recordEl.id} recordObj={recordEl} />)}
+        {data.map(recordEl => <RecordCard key={recordEl.id} recordObj={recordEl} submitHandler={this.submitAlbum} />)}
       </div>
         
   )
   } 
 }
 
-export default App;
+function msp(state) {
+  return {
+    user: state.user,
+    wishlist: state.wishlist
+  }
+}
+
+function mdp(dispatch){
+  return{
+    addtoWishlist: () => dispatch(addingtoWishlist())
+  }
+}
+
+export default connect(msp, mdp)(App);

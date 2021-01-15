@@ -1,0 +1,15 @@
+export const ADD_TO_WISHLIST = "ADD_TO_WISHLIST"
+export const REMOVE_FROM_WISHLIST = "REMOVE_FROM_WISHLIST"
+export const SET_WISHLIST = "SET_WISHLIST"
+
+export const SET_RECORDS = "SET_WISHLIST"
+export const ADD_TO_RECORDS = "ADD_TO_RECORDS"
+export const UPDATE_RECORD_DETAILS = "UPDATE_RECORD_DETAILS"
+
+
+export const SIGNUP = "SIGNUP"
+export const LOGIN =  "LOGIN"
+export const RETURNING = "RETURNING"
+export const DELETE_USER = "DELTE_USER"
+export const EDIT_USER = "EDIT_USER"
+export const LOGGING_OUT = "LOGGING_OUT"
