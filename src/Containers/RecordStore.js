@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 
 class RecordStore extends React.Component {
 
-
+    
 
     render () {
       
@@ -16,7 +16,7 @@ class RecordStore extends React.Component {
           
           <div>
               <h1>Rare Records Store</h1>
-              {console.log(this.props.records)}
+              
           </div>
             
         )

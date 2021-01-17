@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { setRecords, setWishlist } from './Redux/actions'
 
 import NavBar from './Components/NavBar'
-import RecordSearchContainer from './Containers/RecordSearchContainer';
+import RecordDiscogsSearchContainer from './Containers/RecordDiscogsSearchContainer';
 import RecordStore from './Containers/RecordStore';
 import Profile from './Containers/Profile';
 import HomePage from './Containers/HomePage';
@@ -31,7 +31,7 @@ class App extends React.Component {
           }} />
           <Route path="/discogs-search"render={(routerProps)=> {
             return(
-              <RecordSearchContainer routerProps={routerProps} />
+              <RecordDiscogsSearchContainer routerProps={routerProps} />
             )
           }} />
           <Route path="/store" render={(routerProps) => {

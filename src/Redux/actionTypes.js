@@ -10,9 +10,9 @@ export const ADD_TO_RECORDSHOP = "ADD_TO_RECORDSHOP"
 export const UPDATE_RECORDSHOP = "UPDATE_RECORDSHOP"
 
 
-export const SIGNUP = "SIGNUP"
-export const LOGIN =  "LOGIN"
+export const SIGN_UP = "SIGN_UP"
+export const LOG_IN =  "LOG_IN"
 export const RETURNING = "RETURNING"
-export const DELETE_USER = "DELTE_USER"
+export const DELETE_USER = "DELETE_USER"
 export const EDIT_USER = "EDIT_USER"
-export const LOGGING_OUT = "LOGGING_OUT"
+export const LOG_OUT = "LOG_OUT"

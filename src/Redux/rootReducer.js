@@ -7,9 +7,9 @@ const defaultState = {
 
 function userReducer(prevState = defaultState.user, action){
     switch(action.type){
-        case "SIGNUP":
+        case "SIGN_UP":
             return action.payload
-        case "LOGIN":
+        case "LOG_IN":
             return action.payload
         case "RETURNING":
             return action.payload
@@ -17,7 +17,7 @@ function userReducer(prevState = defaultState.user, action){
             return action.payload
         case "EDIT_USER":
             return action.payload
-        case "LOGGING_OUT":
+        case "LOG_OUT":
             return null
         default:
             return prevState
@@ -69,6 +69,8 @@ function recordReducer(prevState = defaultState.records, action){
 
 
 const rootReducer = combineReducers({
+    user: userReducer,
+    owner: ownerReducer,
     wishlists: wishlistReducer,
     records: recordReducer
 })

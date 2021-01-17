@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { addtoWishlist, addtoRecords } from '../Redux/actions'
 
-class RecordSearchContainer extends React.Component {
+class RecordDiscogsSearchContainer extends React.Component {
 
     state = {
         data: []
@@ -101,4 +101,4 @@ function msp(state) {
     }
   }
 
-export default connect(msp, mdp)(RecordSearchContainer);
+export default connect(msp, mdp)(RecordDiscogsSearchContainer);

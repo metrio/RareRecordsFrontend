@@ -1,6 +1,4 @@
 import React from 'react';
-import SearchForm from '../Components/SearchForm';
-import RecordCard from '../Components/RecordCard';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
 
@@ -8,9 +6,7 @@ import { connect } from 'react-redux'
 class Wishlist extends React.Component {
 
 
-    userrWishlist = () => {
-        const userWishlist = this.props.wishlists
-    }
+   
 
 
     render () {
@@ -18,9 +14,8 @@ class Wishlist extends React.Component {
     
         return (
           
-          <div>
-            
-             
+          <div className="wishlist-preview">
+              {this.userWishlist()}
           </div>
             
         )
@@ -29,9 +24,14 @@ class Wishlist extends React.Component {
 
     function msp(state) {
         return {
-          user: state.user,
-          wishlists: state.wishlists
+          user: state.user
         }
       }
 
-export default connect(msp)(Wishlist);
+    function mdp(dispatch){
+        return {
+            removeFromWishlist: (userId) => {dispatch(removeFromWishlist())}
+        }
+    }
+
+export default connect(msp, mdp)(Wishlist);

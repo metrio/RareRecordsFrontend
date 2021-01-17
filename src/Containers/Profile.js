@@ -1,5 +1,8 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { deleteUser } from '../Redux'
 import Wishlist from '../Components/Wishlist'
+
 
 class Profile extends React.Component {
 
@@ -14,4 +17,16 @@ class Profile extends React.Component {
 
 }
 
-export default Profile
+function msp(state){
+    return { 
+        user: state.user
+    }
+}
+
+function mdp(dispatch){
+    return {
+        deleteUser: (userId) => {dispatch(deleteUser(userId))}
+    }
+}
+
+export default connect(msp, mdp)(Profile)
