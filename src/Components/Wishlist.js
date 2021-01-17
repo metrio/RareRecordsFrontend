@@ -5,8 +5,12 @@ import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
 
 
-class RecordStore extends React.Component {
+class Wishlist extends React.Component {
 
+
+    userrWishlist = () => {
+        const userWishlist = this.props.wishlists
+    }
 
 
     render () {
@@ -15,8 +19,8 @@ class RecordStore extends React.Component {
         return (
           
           <div>
-              <h1>Rare Records Store</h1>
-              {console.log(this.props.records)}
+            
+             
           </div>
             
         )
@@ -26,9 +30,8 @@ class RecordStore extends React.Component {
     function msp(state) {
         return {
           user: state.user,
-          wishlists: state.wishlists,
-          records: state.records
+          wishlists: state.wishlists
         }
       }
 
-export default connect(msp)(RecordStore);
+export default connect(msp)(Wishlist);

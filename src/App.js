@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { Profiler } from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { setRecords, setWishlist } from './Redux/actions'
 
+import NavBar from './Components/NavBar'
 import RecordSearchContainer from './Containers/RecordSearchContainer';
 import RecordStore from './Containers/RecordStore';
+import Profile from './Containers/Profile';
+import HomePage from './Containers/HomePage';
 
 class App extends React.Component {
   
@@ -19,8 +22,25 @@ class App extends React.Component {
     return (
       
       <div className="App">
-        <RecordSearchContainer />
-        <RecordStore />
+        <NavBar />
+        <Switch>
+          <Route path="/profile" render={(routerProps)=> {
+            return(
+              <Profile routerProps={routerProps} />
+            )
+          }} />
+          <Route path="/discogs-search"render={(routerProps)=> {
+            return(
+              <RecordSearchContainer routerProps={routerProps} />
+            )
+          }} />
+          <Route path="/store" render={(routerProps) => {
+            return (
+              <RecordStore routerProps={routerProps} />
+            )
+          }} />
+          <Route path="/" render={() => <HomePage />} />
+        </Switch >
       </div>
         
    )

@@ -1,1 +1,76 @@
 
+.nav-bar {
+    background-color: black;
+    color: white;
+    height: 125px;
+    font-style: normal;
+    text-decoration: none;
+    white-space: normal;
+    overflow: hidden;
+  }
+
+  .nav-logo {
+    float: left;
+    display: inline-flex;
+  }
+
+  .nav-logo img{
+    border-radius:  250px;
+    height: 110px;
+    top: 10px;
+    width: auto;
+  }
+
+  .button-div {
+    float: right;
+    height: 20px;
+  }
+  
+  .button-div button {
+    padding:0.90em 1.8em;
+    border-style: transparent;
+    border-color: transparent;
+    border-width: 3.5px, 1px;
+    background-color: transparent;
+    margin:0 3em 4em 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Open Sans', sans-serif;
+    font-style: inherit;
+    font-size: 1.4vw;
+    font-weight: 300;
+    color: white;
+    text-align: center;
+    transition: all 0.2s;
+    z-index: 4;
+  }
+
+  .nav-bar button:hover {
+    color: white;
+    border-color: rgba(255, 255, 255, 0.733);
+    border-width: 3.5px, 1px;
+    border-radius: .5rem;
+    background-color: transparent;
+    text-decoration: none;
+    font-style: normal;
+  
+  }
+  
+  .nav-bar button:active {
+    color: white;
+    text-decoration: none;
+    font-style: normal;
+  }
+  
+  .nav-bar button:visited {
+    color: white;
+    border-color: transparent;
+    text-decoration: none;
+    font-style: normal;
+  }
+  
+  .nav-bar button:link {
+    color: white;
+    text-decoration: none;
+    font-style: normal;
+  }
