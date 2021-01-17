@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { deleteUser } from '../Redux'
 import Wishlist from '../Components/Wishlist'
 
 
@@ -25,7 +24,7 @@ function msp(state){
 
 function mdp(dispatch){
     return {
-        deleteUser: (userId) => {dispatch(deleteUser(userId))}
+        
     }
 }
 

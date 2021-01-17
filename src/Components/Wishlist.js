@@ -6,16 +6,13 @@ import { connect } from 'react-redux'
 class Wishlist extends React.Component {
 
 
-   
-
-
     render () {
       
     
         return (
           
           <div className="wishlist-preview">
-              {this.userWishlist()}
+             
           </div>
             
         )
@@ -30,7 +27,7 @@ class Wishlist extends React.Component {
 
     function mdp(dispatch){
         return {
-            removeFromWishlist: (userId) => {dispatch(removeFromWishlist())}
+            
         }
     }
 

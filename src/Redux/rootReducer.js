@@ -1,6 +1,8 @@
 import {combineReducers} from 'redux'
 
 const defaultState = {
+    user: null,
+    owner: null,
     wishlists: [],
     records: []
 }
