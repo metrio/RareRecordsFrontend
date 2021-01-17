@@ -17,9 +17,7 @@ class RecordCard extends React.Component {
 
     changeHandler = (e) => {
         const prevState = this.state
-
         this.setState({condition: e.target.value}) 
-        
     }
 
 
@@ -37,7 +35,7 @@ class RecordCard extends React.Component {
             img_url: record.cover_image,
             thumb_url: record.thumb,
             year_of_release: parseInt(record.year),
-            condition: this.state.condition,
+            notes: this.state.condition,
             resource_url: record.resource_url
         }
 

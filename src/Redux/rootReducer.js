@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux'
 
 const defaultState = {
-    wishlist: null,
-    records: {}
+    wishlists: [],
+    records: []
 }
 
 function userReducer(prevState = defaultState.user, action){
@@ -39,12 +39,13 @@ function ownerReducer(prevState = defaultState.owner, action){
     }
 }
 
-function wishlistReducer(prevState = defaultState.wishlist, action){
+
+function wishlistReducer(prevState = defaultState.wishlists, action){
     switch(action.type) {
         case "SET_WISHLIST":
             return action.payload
         case "ADD_TO_WISHLIST":
-            return action.payload
+            return [...prevState, action.payload]
         case "REMOVE_FROM_WISHLIST":
             return action.payload    
         default:
@@ -54,10 +55,10 @@ function wishlistReducer(prevState = defaultState.wishlist, action){
 
 function recordReducer(prevState = defaultState.records, action){
     switch(action.type){
-        case "SET_WISHLIST":
+        case "SET_RECORDS":
             return action.payload
         case "ADD_TO_RECORDS":
-            return action.payload
+            return [...prevState, action.payload]
         case "UPDATE_RECORD_DETAILS":
             return action.payload
         default:

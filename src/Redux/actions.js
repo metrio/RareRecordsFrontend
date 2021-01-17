@@ -1,45 +1,46 @@
-import { ADD_TO_WISHLIST ,REMOVE_FROM_WISHLIST, ADD_TO_RECORDS, UPDATE_RECORD_DETAILS , SET_RECORDS, SET_WISHLIST} from './actionTypes'
+import { ADD_TO_WISHLIST , REMOVE_FROM_WISHLIST, ADD_TO_RECORDS, UPDATE_RECORD_DETAILS , SET_RECORDS, SET_WISHLIST} from './actionTypes'
 import {URL} from '../index'
 
-export function addingtoWishlist(userId, recordObj) {
+export function addtoWishlist(userId, wishlist) {
     return function (dispatch, getState) {
 
-        let recordId = localStorage.getItem("recordId")
+        let wishlistId = localStorage.getItem("wishlistId")
         
-            fetch(`${URL}/users/${2}/wishlists/`, {
+            fetch(`${URL}/users/${userId}/wishlists/`, {
                 method: "POST",
                 headers: {
                     "Accepts": "application/json",
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    user_id: 2,
-                    discogs_id: recordObj.discogs_id,
-                    record_id: recordId,
-                    condition: recordObj.condition
+                    user_id: parseInt(userId),
+                    discogs_id: wishlist.discogs_id,
+                    record_id: wishlist.record_id,
+                    notes: wishlist.notes
                 })
             })
             .then(r => r.json())
-            .then(updatedWishlist => {
-                dispatch({type: ADD_TO_WISHLIST, payload: updatedWishlist})
+            .then(wishlistObj => {
+                dispatch({type: ADD_TO_WISHLIST, payload: wishlistObj})
             })
         }
 }
 
 export function setWishlist(userId) {
     return function (dispatch, getState){
-        fetch(`${URL}/users/${2}/wishlists`,{
+        fetch(`${URL}/users/${userId}/wishlists`,{
             method: "GET",
             headers: {
                 "Accepts": "application/json",
                 "Content-Type": "application/json"
             }
-            .then(r=> r.json())
-           .then( wishlists => {
-               localStorage.setItem("wishlistId", wishlists.id)
-               dispatch({SET_WISHLIST, payload: wishlists})
-           })
         })
+            .then(r=> r.json())
+            .then( wishlists => {
+               localStorage.setItem("wishlistId", wishlists.id)
+               dispatch({type: SET_WISHLIST, payload: wishlists})
+           })
+
     }
 }
 
@@ -51,20 +52,19 @@ export function setRecords() {
                 "Accepts": "application/json",
                 "Content-Type": "application/json"
             }
-            .then(r=> r.json())
-           .then( records => {
-               localStorage.setItem("wishlistId", wishlists.id)
-               dispatch({SET_RECORDS, payload: records})
-           })
         })
+            .then(r=> r.json())
+            .then(records => {
+               localStorage.setItem("recordId", records.id)
+              return dispatch({type: SET_RECORDS, payload: records})
+           })
+        
     }
 }
         
 
 export function addtoRecords(recordObj) {
     return function (dispatch, getState) {
-
-        let recordId
 
         fetch(`${URL}/records`, {
             method: "POST",
@@ -82,6 +82,9 @@ export function addtoRecords(recordObj) {
             })
         })
         .then(r => r.json())
-        .then(newRecord => {recordId = newRecord.id })
+        .then(record => {
+            return dispatch({type: ADD_TO_RECORDS, payload: record})
+        })
+        
     }
 }

@@ -2,70 +2,44 @@ import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { addingtoWishlist } from './Redux/actions'
-import RecordCard from './Components/RecordCard';
-import SearchForm from './Components/SearchForm';
+import { setRecords, setWishlist } from './Redux/actions'
+
+import RecordSearchContainer from './Containers/RecordSearchContainer';
+import RecordStore from './Containers/RecordStore';
 
 class App extends React.Component {
   
-  state = {
-    data: []
+  componentDidMount = () => {
+    this.props.setWishlist()
+    this.props.setRecords()
   }
-
-  recordSearch = (searchObj) => {
-    const token = process.env.REACT_APP_DISCOGS_API_KEY
-    const artist = searchObj.artist_name
-    const record = searchObj.record_name
-    
-    const url = `https://api.discogs.com/database/search?artist=${artist}&release_title=${record}&format=vinyl&token=${token}`
-
-    this.componentDidMount(url)
-  }
-
-  componentDidMount = (url) => {
-    fetch(`${url}`, {
-      headers: {
-          "Accepts": "application/json",
-          "Content-Type": "application/json"
-      }
-    })
-    .then(resp => resp.json())
-    .then( query => {
-      this.setState({data: query.results})
-    })
-  }
-
-  submitAlbum = (details) => {
-
-    console.log(store.wishlist)
-      // props.addtoWishlist(details)
-  }
-
-
+  
   render () {
-    const { data } = this.state
 
     return (
       
       <div className="App">
-        <SearchForm submitHandler={this.recordSearch}/>
-        {data.map(recordEl => <RecordCard key={recordEl.id} recordObj={recordEl} submitHandler={this.submitAlbum} />)}
+        <RecordSearchContainer />
+        <RecordStore />
       </div>
         
-  )
+   )
   } 
 }
 
 function msp(state) {
   return {
     user: state.user,
-    wishlist: state.wishlist
+    wishlists: state.wishlists,
+    records: state.records
   }
 }
 
 function mdp(dispatch){
   return{
-    addtoWishlist: () => dispatch(addingtoWishlist())
+    setWishlist: (userId) => dispatch(setWishlist(2)),
+    setRecords: () => dispatch(setRecords())
+    
   }
 }
 
