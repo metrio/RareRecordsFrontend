@@ -5,14 +5,19 @@ import { connect } from 'react-redux'
 
 class Wishlist extends React.Component {
 
+  
+
+
 
     render () {
       
     
         return (
+
           
-          <div className="wishlist-preview">
-             
+          <div>
+            <h1>Wishlist!</h1>
+
           </div>
             
         )
@@ -21,14 +26,11 @@ class Wishlist extends React.Component {
 
     function msp(state) {
         return {
-          user: state.user
+          user: state.user,
+          wishlists: state.wishlists
         }
       }
 
-    function mdp(dispatch){
-        return {
-            
-        }
-    }
 
-export default connect(msp, mdp)(Wishlist);
+
+export default connect(msp)(Wishlist);

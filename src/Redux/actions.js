@@ -1,5 +1,94 @@
-import { ADD_TO_WISHLIST , REMOVE_FROM_WISHLIST, ADD_TO_RECORDS, UPDATE_RECORD_DETAILS , SET_RECORDS, SET_WISHLIST} from './actionTypes'
+import { ADD_TO_WISHLIST , REMOVE_FROM_WISHLIST, ADD_TO_RECORDS, UPDATE_RECORD_DETAILS , SET_RECORDS, SET_WISHLIST, LOG_IN, SIGN_UP, LOG_OUT, RETURNING, DELETE_USER, EDIT_USER} from './actionTypes'
 import {URL} from '../index'
+
+
+export function loginUser(userObj) {
+  return function(dispatch, getState){
+      fetch(`${URL}/login`, {
+          method: "POST",
+          headers: {
+              "Accepts": "application/json",
+              "Content-type": "application/json"
+          },
+          body: JSON.stringify({ user: userObj })
+      })
+          .then(r => r.json())
+          .then(checkedUserObj => {
+              localStorage.setItem("token", checkedUserObj.jwt)
+              dispatch({type: LOG_IN, payload: checkedUserObj.user})
+          })
+          .catch(console.log)
+  }
+}
+
+
+export function signupUser(userObj) {
+  return function (dispatch, getState) {
+      fetch(`${URL}/users`, {
+          method: "POST",
+          headers: {
+              "Accepts": "application/json",
+              "Content-type": "application/json"
+          },
+          body: JSON.stringify({ user: userObj })
+      })
+          .then(r => r.json())
+          .then(newUserObj => {
+              localStorage.setItem("token", newUserObj.jwt)
+              dispatch({type: SIGN_UP, payload: newUserObj.user})
+          })
+          .catch(console.log)
+  }
+}
+
+
+  export function returningUser(userObj) {
+    return {type: RETURNING, payload: userObj}
+}
+
+export function deleteUser(userId){
+  return function (dispatch){
+      fetch(`${URL}/users/${userId}`, {
+          method: "DELETE",
+          headers: {
+              "Accepts": "application/json",
+              "Content-type": "application/json",
+              "Authorization": 'Bearer ' + localStorage.getItem("token")
+          }
+      })
+      .then(r=>r.json())
+      .then(response => {
+          console.log(response)
+          localStorage.clear()
+          dispatch({type: DELETE_USER})
+      })
+  }
+}
+
+export function editUser(userObj, userId){
+  return function (dispatch){
+      fetch(`${URL}/users/${userId}`, {
+          method: "PATCH",
+          headers: {
+              "Accepts": "application/json",
+              "Content-type": "application/json",
+              "Authorization": 'Bearer ' + localStorage.getItem("token")
+          },
+          body: JSON.stringify({ user: userObj })
+      })
+      .then(r=>r.json())
+      .then(returnedUser => {
+          console.log(returnedUser)
+          dispatch({type: EDIT_USER, payload: returnedUser.user})
+      })
+  }
+}
+
+export function loggingOut(){
+  return { type: LOG_OUT}
+}
+
+
 
 export function addtoWishlist(userId, wishlist) {
     return function (dispatch, getState) {
@@ -13,7 +102,7 @@ export function addtoWishlist(userId, wishlist) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    user_id: parseInt(userId),
+                    user_id: userId,
                     discogs_id: wishlist.discogs_id,
                     record_id: wishlist.record_id,
                     notes: wishlist.notes
@@ -24,7 +113,7 @@ export function addtoWishlist(userId, wishlist) {
                 dispatch({type: ADD_TO_WISHLIST, payload: wishlistObj})
             })
         }
-}
+    }
 
 export function setWishlist(userId) {
     return function (dispatch, getState){

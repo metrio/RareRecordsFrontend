@@ -10,14 +10,19 @@ const defaultState = {
 function userReducer(prevState = defaultState.user, action){
     switch(action.type){
         case "SIGN_UP":
+            console.log(action.payload)
             return action.payload
         case "LOG_IN":
+            console.log(action.payload)
             return action.payload
         case "RETURNING":
+            console.log(action.payload)
             return action.payload
         case "DELETE_USER":
+            console.log(action.payload)
             return action.payload
         case "EDIT_USER":
+            console.log(action.payload)
             return action.payload
         case "LOG_OUT":
             return null
@@ -28,14 +33,8 @@ function userReducer(prevState = defaultState.user, action){
 
 function ownerReducer(prevState = defaultState.owner, action){
     switch(action.type){
-        case "LOGIN":
+        case "OWNER_LOG_IN":
             return action.payload
-        case "RETURNING":
-            return action.payload
-        case "EDIT_USER":
-            return action.payload
-        case "LOGGING_OUT":
-            return null
         default:
             return prevState
     }

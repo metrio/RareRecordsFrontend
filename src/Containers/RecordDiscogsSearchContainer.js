@@ -3,7 +3,7 @@ import SearchForm from '../Components/SearchForm';
 import RecordCard from '../Components/RecordCard';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { addtoWishlist, addtoRecords } from '../Redux/actions'
+import { addtoWishlist, addtoRecords, setRecords } from '../Redux/actions'
 
 class RecordDiscogsSearchContainer extends React.Component {
 
@@ -47,19 +47,23 @@ class RecordDiscogsSearchContainer extends React.Component {
     const recordList = this.props.records
     const lastRecord = recordList.slice(-1)[0]
     const foundRecord = recordList.filter(recordEl => recordEl.discogs_id === details.discogs_id)
+    const user = this.props.user
 
+   
     if(foundRecord.length > 0){
         const wishlist = {
             discogs_id: details.discogs_id,
             record_id: foundRecord[0].id,
             notes: details.notes
           }
-       this.addtoWishlist(2, wishlist)
+       this.addtoWishlist(user.id, wishlist)
             
     } else {
         let id = lastRecord.id + 1
+        const user = this.props.user
 
         this.addtoRecords(details)
+      
 
         const wishlist = {
             discogs_id: details.discogs_id,
@@ -67,9 +71,10 @@ class RecordDiscogsSearchContainer extends React.Component {
             notes: details.notes
         }
        
-        this.addtoWishlist(2, wishlist)
-    }   
-   }
+        this.addtoWishlist(user.id, wishlist)
+    }
+  }  
+   
 
   render () {
     console.log(this.props)
@@ -97,7 +102,8 @@ function msp(state) {
   function mdp(dispatch){
     return{
       addtoWishlist: (userId, wishlistObj) => dispatch(addtoWishlist(userId, wishlistObj)),
-      addtoRecords: (details) => dispatch(addtoRecords(details))
+      addtoRecords: (details) => dispatch(addtoRecords(details)),
+      setRecords: () => dispatch(setRecords())
     }
   }
 

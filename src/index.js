@@ -11,7 +11,6 @@ import { createStore, applyMiddleware } from 'redux';
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
-console.log(store.getState())
 export const URL = `http://localhost:3000`
 
 ReactDOM.render(
