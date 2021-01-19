@@ -77,7 +77,6 @@ class RecordDiscogsSearchContainer extends React.Component {
    
 
   render () {
-    console.log(this.props)
     const { data } = this.state
 
     return (

@@ -14,8 +14,9 @@ export function loginUser(userObj) {
       })
           .then(r => r.json())
           .then(checkedUserObj => {
-              localStorage.setItem("token", checkedUserObj.jwt)
+              localStorage.setItem("token", checkedUserObj.jwt)        
               dispatch({type: LOG_IN, payload: checkedUserObj.user})
+
           })
           .catch(console.log)
   }
@@ -41,10 +42,14 @@ export function signupUser(userObj) {
   }
 }
 
-
   export function returningUser(userObj) {
-    return {type: RETURNING, payload: userObj}
-}
+    const wishlistRecords = userObj.records
+    return dispatch => {
+        dispatch({type: RETURNING, payload: userObj}) 
+        dispatch(setWishlist(wishlistRecords))
+        }
+    } 
+
 
 export function deleteUser(userId){
   return function (dispatch){
@@ -115,23 +120,13 @@ export function addtoWishlist(userId, wishlist) {
         }
     }
 
-export function setWishlist(userId) {
+export function setWishlist(wishlistRecords) {
     return function (dispatch, getState){
-        fetch(`${URL}/users/${userId}/wishlists`,{
-            method: "GET",
-            headers: {
-                "Accepts": "application/json",
-                "Content-Type": "application/json"
-            }
-        })
-            .then(r=> r.json())
-            .then( wishlists => {
-               localStorage.setItem("wishlistId", wishlists.id)
-               dispatch({type: SET_WISHLIST, payload: wishlists})
-           })
-
+            dispatch({type: SET_WISHLIST, payload: wishlistRecords})
     }
+
 }
+
 
 export function setRecords() {
     return function (dispatch, getState){

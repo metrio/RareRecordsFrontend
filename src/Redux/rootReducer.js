@@ -44,6 +44,7 @@ function ownerReducer(prevState = defaultState.owner, action){
 function wishlistReducer(prevState = defaultState.wishlists, action){
     switch(action.type) {
         case "SET_WISHLIST":
+            console.log(action.payload)
             return action.payload
         case "ADD_TO_WISHLIST":
             return [...prevState, action.payload]

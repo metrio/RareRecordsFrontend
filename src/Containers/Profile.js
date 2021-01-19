@@ -6,11 +6,16 @@ import Wishlist from '../Components/Wishlist'
 class Profile extends React.Component {
 
     render() {
+        const user = this.props.user
         return (
-            <span className="profile">
-                <h1> User Page</h1>
-                <Wishlist />
-            </span>
+            <>
+                { user ?
+                    <span className="profile">
+                        <h1>Welcome  {this.props.user.username}</h1>
+                        <Wishlist />
+                    </span>
+                  : <h1>Loading</h1> }
+        </>
         )
     }
 

@@ -29,7 +29,6 @@ class App extends React.Component {
         .then(returningUser => {
           this.props.returning(returningUser.user)
           this.props.setRecords()
-          this.props.setWishlist()
           // this.props.setWishlist(returningUser.records)
         })
     }
