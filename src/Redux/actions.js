@@ -1,4 +1,4 @@
-import { ADD_TO_WISHLIST , REMOVE_FROM_WISHLIST, ADD_TO_RECORDS, UPDATE_RECORD_DETAILS , SET_RECORDS, SET_WISHLIST, LOG_IN, SIGN_UP, LOG_OUT, RETURNING, DELETE_USER, EDIT_USER} from './actionTypes'
+import { ADD_TO_WISHLIST , REMOVE_FROM_WISHLIST, ADD_TO_RECORDS, UPDATE_RECORD_DETAILS , SET_RECORDS, SET_WISHLIST, LOG_IN, SIGN_UP, LOG_OUT, RETURNING, DELETE_USER, EDIT_USER, RECORD_DETAILS} from './actionTypes'
 import {URL} from '../index'
 
 
@@ -95,7 +95,7 @@ export function loggingOut(){
 
 
 
-export function addtoWishlist(userId, wishlist) {
+export function addtoWishlist(userId, wishlist, recordDetails) {
     return function (dispatch, getState) {
 
         let wishlistId = localStorage.getItem("wishlistId")
@@ -107,22 +107,39 @@ export function addtoWishlist(userId, wishlist) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    user_id: userId,
-                    discogs_id: wishlist.discogs_id,
-                    record_id: wishlist.record_id,
+                    user_id: parseInt(userId),
+                    discogs_id: parseInt(wishlist.discogs_id) ,
+                    record_id: parseInt(wishlist.record_id) ,
                     notes: wishlist.notes
                 })
             })
             .then(r => r.json())
             .then(wishlistObj => {
-                dispatch({type: ADD_TO_WISHLIST, payload: wishlistObj})
+                dispatch({type: ADD_TO_WISHLIST, payload: recordDetails})
             })
         }
     }
 
+export function removeFromWishlist(userId, wishlistId) {
+    return function(dispatch, getState) {
+        fetch(`${URL}/users/${userId}/wishlists/${wishlistId}`, {
+            method: "DELETE",
+            headers: {
+                "Accepts": "application/json",
+                "Content-Type": "application/json"
+            }
+        })
+        .then(resp => resp.json())
+        .then(resp => {
+            dispatch({type: SET_WISHLIST})
+            console.log(resp)
+        })
+    }
+}
+
 export function setWishlist(wishlistRecords) {
     return function (dispatch, getState){
-            dispatch({type: SET_WISHLIST, payload: wishlistRecords})
+            dispatch({type: REMOVE_FROM_WISHLIST, payload: wishlistRecords})
     }
 
 }
@@ -143,6 +160,19 @@ export function setRecords() {
               return dispatch({type: SET_RECORDS, payload: records})
            })
         
+    }
+}
+
+export function recordDetails(discogs_id) {
+
+    return function (dispatch, getState){
+       const token = process.env.REACT_APP_DISCOGS_API_KEY
+        fetch(`https://api.discogs.com/masters/${discogs_id}`)
+        .then(resp => resp.json())
+        .then(details => {
+            console.log(details)
+            return dispatch({type: RECORD_DETAILS, payload: details})
+        })
     }
 }
         

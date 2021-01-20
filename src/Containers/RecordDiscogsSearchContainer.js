@@ -56,7 +56,7 @@ class RecordDiscogsSearchContainer extends React.Component {
             record_id: foundRecord[0].id,
             notes: details.notes
           }
-       this.addtoWishlist(user.id, wishlist)
+       this.addtoWishlist(user.id, wishlist, details)
             
     } else {
         let id = lastRecord.id + 1
@@ -71,7 +71,7 @@ class RecordDiscogsSearchContainer extends React.Component {
             notes: details.notes
         }
        
-        this.addtoWishlist(user.id, wishlist)
+        this.addtoWishlist(user.id, wishlist, details)
     }
   }  
    
@@ -100,7 +100,7 @@ function msp(state) {
   
   function mdp(dispatch){
     return{
-      addtoWishlist: (userId, wishlistObj) => dispatch(addtoWishlist(userId, wishlistObj)),
+      addtoWishlist: (userId, wishlistObj, record) => dispatch(addtoWishlist(userId, wishlistObj, record)),
       addtoRecords: (details) => dispatch(addtoRecords(details)),
       setRecords: () => dispatch(setRecords())
     }

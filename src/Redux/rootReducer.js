@@ -4,6 +4,7 @@ const defaultState = {
     user: null,
     owner: null,
     wishlists: [],
+    details: [],
     records: []
 }
 
@@ -55,6 +56,7 @@ function wishlistReducer(prevState = defaultState.wishlists, action){
     }
 }
 
+
 function recordReducer(prevState = defaultState.records, action){
     switch(action.type){
         case "SET_RECORDS":
@@ -68,12 +70,22 @@ function recordReducer(prevState = defaultState.records, action){
     }
 }
 
+function detailsReducer(prevState = defaultState.details, action){
+    switch(action.type){
+        case "RECORD_DETAILS":
+            return action.payload
+        default:
+            return prevState
+    }
+}
+
 
 
 const rootReducer = combineReducers({
     user: userReducer,
     owner: ownerReducer,
     wishlists: wishlistReducer,
+    details: detailsReducer,
     records: recordReducer
 })
 

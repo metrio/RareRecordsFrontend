@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Wishlist from '../Components/Wishlist'
+import Wishlist from './Wishlist'
 
 
 class Profile extends React.Component {
@@ -12,7 +12,7 @@ class Profile extends React.Component {
                 { user ?
                     <span className="profile">
                         <h1>Welcome  {this.props.user.username}</h1>
-                        <Wishlist />
+                        <Wishlist routerProps={this.props.routerProps} />
                     </span>
                   : <h1>Loading</h1> }
         </>

@@ -12,6 +12,7 @@ import LogInForm from './Components/LogInForm';
 import SignUpForm from './Components/SignUpForm';
 import EditForm from './Components/EditForm';
 import {URL} from './index';
+import RecordDetails from './Components/RecordDetails';
 
 class App extends React.Component {
   
@@ -81,6 +82,11 @@ class App extends React.Component {
           <Route path='/edit' render={(routerProps) => {
             return(
               <EditForm submitHandler={this.editSubmitHandler} routerProps={routerProps} />
+            )
+          }} />
+          <Route path='/records/:artist/:record_name/' render={(routerProps) => {
+            return(
+              <RecordDetails routerProps={routerProps}/>
             )
           }} />
 
