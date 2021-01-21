@@ -50,7 +50,7 @@ function wishlistReducer(prevState = defaultState.wishlists, action){
         case "ADD_TO_WISHLIST":
             return [...prevState, action.payload]
         case "REMOVE_FROM_WISHLIST":
-            return action.payload    
+            return prevState.filter(wishlistRecord => wishlistRecord.id !== action.payload)
         default:
             return prevState
     }

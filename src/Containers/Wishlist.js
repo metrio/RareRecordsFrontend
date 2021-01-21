@@ -32,7 +32,7 @@ class Wishlist extends React.Component {
       return null
     } else {
       const foundWishlist = userWishlist.find(wishlist => wishlist.record_id === record_id)
-      this.props.removeFromWishlist(this.props.user.id, foundWishlist.id)
+      this.props.removeFromWishlist(this.props.user.id, foundWishlist.id, record_id)
     }
 
     
@@ -79,7 +79,7 @@ class Wishlist extends React.Component {
     function mdp(dispatch){
       return{
         recordDetails: (discogs_id) => dispatch(recordDetails(discogs_id)),
-        removeFromWishlist:  (userId, wishlistId) => dispatch(removeFromWishlist(userId, wishlistId))
+        removeFromWishlist:  (userId, wishlistId, recordId) => dispatch(removeFromWishlist(userId, wishlistId, recordId))
       }
     }
 

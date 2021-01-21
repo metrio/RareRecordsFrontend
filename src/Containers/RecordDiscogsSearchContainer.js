@@ -3,7 +3,7 @@ import SearchForm from '../Components/SearchForm';
 import RecordCard from '../Components/RecordCard';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { addtoWishlist, addtoRecords, setRecords } from '../Redux/actions'
+import { addtoWishlist, addtoRecords, newRecordWishlist, recordDetails} from '../Redux/actions'
 
 class RecordDiscogsSearchContainer extends React.Component {
 
@@ -29,15 +29,6 @@ class RecordDiscogsSearchContainer extends React.Component {
     })
   }
 
-  /** Handles adding records to our backend to make sure that we have records in the backend */
-  addtoRecords = (details)=> {
-    this.props.addtoRecords(details)
-  }
-
-  /** Handles this function of adding to Wishlist */
-  addtoWishlist = (userId, wishlistObj) => {
-    this.props.addtoWishlist(userId, wishlistObj)  
-  }
   
   /** Double Checks to see if we already have the record in the backend,
    * if it does then we just add right to the wishlist,
@@ -45,47 +36,44 @@ class RecordDiscogsSearchContainer extends React.Component {
    */
   submitAlbum = (details) => {
     const recordList = this.props.records
-    const lastRecord = recordList.slice(-1)[0]
-    const foundRecord = recordList.filter(recordEl => recordEl.discogs_id === details.discogs_id)
+    const foundRecordArray = recordList.filter(recordEl => recordEl.discogs_id === details.discogs_id)
     const user = this.props.user
 
+    foundRecordArray[0]["notes"] = details.notes
+    const foundRecord = foundRecordArray[0]
+
+    console.log("In submitAlbum", foundRecord)
    
-    if(foundRecord.length > 0){
-        const wishlist = {
-            discogs_id: details.discogs_id,
-            record_id: foundRecord[0].id,
-            notes: details.notes
-          }
-       this.addtoWishlist(user.id, wishlist, details)
-            
+    if(foundRecordArray.length > 0){
+       this.props.addtoWishlist(user.id, foundRecord)
     } else {
-        let id = lastRecord.id + 1
-        const user = this.props.user
-
-        this.addtoRecords(details)
-      
-
-        const wishlist = {
-            discogs_id: details.discogs_id,
-            record_id: id,
-            notes: details.notes
-        }
-       
-        this.addtoWishlist(user.id, wishlist, details)
+       this.props.newRecordWishlist(user.id, details)
     }
   }  
+
+  moreDetails = (recordObj) => {
+    let location = this.props.routerProps.history
+    const artist = recordObj.artist_name.replace(/\s+/g, '-')
+    const album = recordObj.album_name.replace(/\s+/g, '-')
+    
+    location.replace(`/records/${artist}/${album}`)
+    
+    this.props.recordDetails(recordObj.discogs_id)
+  }
    
 
   render () {
     const { data } = this.state
 
     return (
-      
-      <div className="Search-Container">
-        <SearchForm  submitHandler={this.discogsRecordSearch}/>
-        {data.map(recordEl => <RecordCard key={recordEl.id} recordObj={recordEl} submitHandler={this.submitAlbum} />)}
-      </div>
-        
+      <span className="search-page">
+        <div className="Record-Container">
+          {data.map(recordEl => <RecordCard key={recordEl.id} recordObj={recordEl} submitHandler={this.submitAlbum} moreDetails={this.moreDetails}/>)}
+        </div>
+        <div className="Search-Container">
+          <SearchForm  submitHandler={this.discogsRecordSearch}/>
+        </div>
+      </span>  
     )
   } 
 }
@@ -100,9 +88,11 @@ function msp(state) {
   
   function mdp(dispatch){
     return{
-      addtoWishlist: (userId, wishlistObj, record) => dispatch(addtoWishlist(userId, wishlistObj, record)),
+      addtoWishlist: (userId, record) => dispatch(addtoWishlist(userId, record)),
       addtoRecords: (details) => dispatch(addtoRecords(details)),
-      setRecords: () => dispatch(setRecords())
+      newRecordWishlist: (userId, recordDetails) => dispatch(newRecordWishlist(userId, recordDetails)),
+      recordDetails: (discogs_id) => dispatch(recordDetails(discogs_id))
+
     }
   }
 

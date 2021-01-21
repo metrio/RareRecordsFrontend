@@ -93,3 +93,18 @@
     margin: auto;
     text-align: center;
   }
+
+  .search-page{
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .Record-Container{
+    grid-template-rows: repeat(4, 100px);
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .Search-Container {
+    float: right;
+    justify-content: flex-end;
+  }

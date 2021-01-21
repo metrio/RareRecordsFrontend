@@ -20,17 +20,16 @@ class RecordCard extends React.Component {
         this.setState({condition: e.target.value}) 
     }
 
-
-    submitHandler = (e) => {
-        e.preventDefault()
-        const title = this.seperateDetails()
+    recordDetail = () => {
+        const title = this.props.recordObj.title.split(" - ")
         const artist = title[0]
         const record_name = title[1]
+
         const record = this.props.recordObj
 
-        const wishlistObj = {
+        const recordObj = {
             artist_name: artist,
-            record_name: record_name,
+            album_name: record_name,
             discogs_id: record.master_id,
             img_url: record.cover_image,
             thumb_url: record.thumb,
@@ -39,27 +38,37 @@ class RecordCard extends React.Component {
             resource_url: record.resource_url
         }
 
-        this.props.submitHandler(wishlistObj)
-    
+        return recordObj
     }
 
-    seperateDetails = () => {
-        const title = this.props.recordObj.title.split(" - ")
-        
-        return title
+    moreDetails = (e) => {
+        e.preventDefault()
+        const recordObj = this.recordDetail()
+
+        console.log("moreDetails", recordObj)
+
+        this.props.moreDetails(recordObj)
     }
+
+
+    submitHandler = (e) => {
+        e.preventDefault()
+        const wishlistObj = this.recordDetail()
+
+        this.props.submitHandler(wishlistObj)
+        this.wishlistHandler()
+    }
+
+  
 
     render(){
-        const title = this.seperateDetails()
-        const artist = title[0]
-        const record_name = title[1]
-        const record = this.props.recordObj
+        const record = this.recordDetail()
 
         return(
             <div className="recordCard-div">
-                <h4>Artist: {artist}</h4>
-                <h4>Record: {record_name}</h4>
-                <img src={record.cover_image} alt={record.title} style={{width:'auto', height:'125px'}}/>
+                <h4>Artist: {record.artist_name}</h4>
+                <h4>Record: {record.album_name}</h4>
+                <img src={record.img_url} alt={record.album_name} style={{width:'auto', height:'125px'}}/>
                 <h6>Year of Release: {record.year}</h6>
                 <button onClick={this.wishlistHandler}>Want to add to Wishlist?</button>
                 {this.state.wishlist 
@@ -71,6 +80,7 @@ class RecordCard extends React.Component {
                 </form>
                 
                 : null}
+                <button onClick={this.moreDetails}>More Details!</button>
             </div>
         )
     }

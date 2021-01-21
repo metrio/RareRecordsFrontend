@@ -21,18 +21,32 @@ class RecordDetails extends React.Component {
         return (
             <>
             { details.length === 0
+
              ?
                 <h1>Loading</h1>
              : 
-             <span>
-                 <img src={foundRecord.thumb_url} alt={this.props.details.title} />
-                 <h3>{this.props.details.title} - {this.props.details.artists[0].name}</h3>
-                 <h3>{console.log(this.props.details)}</h3>
-                 <div className="tracklist">
-                    {this.trackList()}
-                 </div>
 
-             </span>
+                 foundRecord === undefined 
+
+                ?
+                    <span>
+                        <img src={this.props.details.thumb_url} alt={this.props.details.title} />
+                        <h3>{this.props.details.title} - {this.props.details.artists[0].name}</h3>
+                        <h3>{console.log(this.props.details)}</h3>
+                        <div className="tracklist">
+                            {this.trackList()}
+                        </div>
+                    </span>
+                :
+                    <span>
+                        <img src={foundRecord.thumb_url} alt={this.props.details.title} />
+                        <h3>{this.props.details.title} - {this.props.details.artists[0].name}</h3>
+                        <h3>{console.log(this.props.details)}</h3>
+                        <div className="tracklist">
+                            {this.trackList()}
+                        </div>
+                    </span>
+                
             }
             
             </>
