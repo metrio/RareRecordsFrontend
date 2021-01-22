@@ -46,6 +46,12 @@ class RecordDiscogsSearchContainer extends React.Component {
     if(foundRecordArray.length > 0){
 
       foundRecordArray[0]["notes"] = details.notes
+      foundRecordArray[0]["resource_url"] = details.resource_url
+      foundRecordArray[0]["format"] = details.formats
+      foundRecordArray[0]["catno"] = details.catno
+      foundRecordArray[0]["label"] = details.label
+      foundRecordArray[0]["country"] = details.country
+
       const foundRecord = foundRecordArray[0]
        
       this.props.addtoWishlist(user.id, foundRecord)
@@ -71,13 +77,13 @@ class RecordDiscogsSearchContainer extends React.Component {
     return (
       <span className="search-page">
           <h1> {data.length > 0 ? data[0].title : null} </h1>
-          <h2>Number of Results: {this.state.results}</h2>
 
         <div className="Record-Container">
           {data.map(recordEl => <RecordCard key={recordEl.id} recordObj={recordEl} submitHandler={this.submitAlbum} moreDetails={this.moreDetails}/>)}
         </div>
-        
+
         <div className="Search-Container">
+          <h2>Number of Results: {this.state.results}</h2>
           <SearchForm  submitHandler={this.discogsRecordSearch}/>
         </div>
       </span>  

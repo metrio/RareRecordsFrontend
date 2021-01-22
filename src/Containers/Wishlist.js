@@ -31,6 +31,8 @@ class Wishlist extends React.Component {
   removeFromWishlist = (record_id) => {
     const userWishlist = this.state.userWishlist
 
+    console.log(userWishlist)
+
     if (userWishlist.length === 0){
       return null
     } else {

@@ -66,8 +66,6 @@ class RecordCard extends React.Component {
 
         return(
             <div className="recordCard-div">
-                <h4>Artist: {record.artist_name}</h4>
-                <h4>Record: {record.album_name}</h4>
                 <img src={record.img_url} alt={record.album_name} style={{width:'auto', height:'125px'}}/>
                 <h6>Year of Release: {record.year_of_release}</h6>
                 <button onClick={this.wishlistHandler}>Want to add to Wishlist?</button>

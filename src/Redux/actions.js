@@ -106,10 +106,10 @@ export function loggingOut(){
              body: JSON.stringify({
                  album_name: recordObj.album_name,
                  artist_name: recordObj.artist_name,
-                 discogs_id: recordObj.discogs_id,
+                 discogs_id: parseInt(recordObj.discogs_id),
                  thumb_url: recordObj.thumb_url,
                  img_url: recordObj.img_url,
-                 year_of_release: recordObj.year_of_release
+                 year_of_release: parseInt(recordObj.year_of_release)
              })
          })
          .then(r => r.json())
@@ -226,14 +226,20 @@ export function addtoRecords(recordObj) {
             body: JSON.stringify({
                  album_name: recordObj.record_name,
                  artist_name: recordObj.artist_name,
-                 discogs_id: recordObj.discogs_id,
+                 discogs_id: parseInt(recordObj.discogs_id),
                  thumb_url: recordObj.thumb_url,
                  img_url: recordObj.img_url,
-                 year_of_release: recordObj.year_of_release
+                 year_of_release: parseInt(recordObj.year_of_release)
             })
         })
         .then(r => r.json())
         .then(record => {
+                 record["notes"] = recordObj.notes
+                 record["resource_url"] = recordObj.resource_url
+                 record["format"] = recordObj.formats
+                 record["catno"] = recordObj.catno
+                 record["label"] = recordObj.label
+                 record["country"] = recordObj.country
             return dispatch({type: ADD_TO_RECORDS, payload: record})
         })
         
