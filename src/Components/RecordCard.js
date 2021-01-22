@@ -16,7 +16,6 @@ class RecordCard extends React.Component {
     }
 
     changeHandler = (e) => {
-        const prevState = this.state
         this.setState({condition: e.target.value}) 
     }
 
@@ -35,7 +34,11 @@ class RecordCard extends React.Component {
             thumb_url: record.thumb,
             year_of_release: parseInt(record.year),
             notes: this.state.condition,
-            resource_url: record.resource_url
+            resource_url: record.resource_url,
+            format: record.formats,
+            catno: record.catno,
+            label: record.label,
+            country: record.country
         }
 
         return recordObj
@@ -44,8 +47,6 @@ class RecordCard extends React.Component {
     moreDetails = (e) => {
         e.preventDefault()
         const recordObj = this.recordDetail()
-
-        console.log("moreDetails", recordObj)
 
         this.props.moreDetails(recordObj)
     }
@@ -56,7 +57,6 @@ class RecordCard extends React.Component {
         const wishlistObj = this.recordDetail()
 
         this.props.submitHandler(wishlistObj)
-        this.wishlistHandler()
     }
 
   
@@ -69,7 +69,7 @@ class RecordCard extends React.Component {
                 <h4>Artist: {record.artist_name}</h4>
                 <h4>Record: {record.album_name}</h4>
                 <img src={record.img_url} alt={record.album_name} style={{width:'auto', height:'125px'}}/>
-                <h6>Year of Release: {record.year}</h6>
+                <h6>Year of Release: {record.year_of_release}</h6>
                 <button onClick={this.wishlistHandler}>Want to add to Wishlist?</button>
                 {this.state.wishlist 
                 ? 

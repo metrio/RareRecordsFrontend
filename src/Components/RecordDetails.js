@@ -8,15 +8,21 @@ class RecordDetails extends React.Component {
 
 
     trackList = () => {
-        const trackListArray = this.props.details.tracklist
+        const details = this.props.details
+        const trackListArray = details.tracklist
 
-       return trackListArray.map(trackEl => <li key={trackEl.position}> {trackEl.title}</li>)
+        if (details.length === 0){
+
+        } else {
+            return trackListArray.map(trackEl => <li key={trackEl.position}> {trackEl.title}</li>)
+        }
+
     }
 
 
     render () {
         const details = this.props.details
-        const foundRecord = this.props.records.find(record => record.discogs_id === this.props.details.id)
+        
         
         return (
             <>
@@ -26,26 +32,17 @@ class RecordDetails extends React.Component {
                 <h1>Loading</h1>
              : 
 
-                 foundRecord === undefined 
-
-                ?
+                
                     <span>
-                        <img src={this.props.details.thumb_url} alt={this.props.details.title} />
-                        <h3>{this.props.details.title} - {this.props.details.artists[0].name}</h3>
+                        <img src={details.thumb_url} alt={details.title} />
+                        <h3>{details.album_name} - {details.artist_name}</h3>
                         <h3>{console.log(this.props.details)}</h3>
+                        
                         <div className="tracklist">
                             {this.trackList()}
                         </div>
                     </span>
-                :
-                    <span>
-                        <img src={foundRecord.thumb_url} alt={this.props.details.title} />
-                        <h3>{this.props.details.title} - {this.props.details.artists[0].name}</h3>
-                        <h3>{console.log(this.props.details)}</h3>
-                        <div className="tracklist">
-                            {this.trackList()}
-                        </div>
-                    </span>
+             
                 
             }
             

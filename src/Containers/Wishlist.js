@@ -22,7 +22,10 @@ class Wishlist extends React.Component {
     
     location.replace(`/records/${artist}/${album}`)
     
-    this.props.recordDetails(recordObj.discogs_id)
+
+    console.log("In Wishlist: ", recordObj)
+    
+    this.props.recordDetails(recordObj)
   }
 
   removeFromWishlist = (record_id) => {
@@ -35,7 +38,6 @@ class Wishlist extends React.Component {
       this.props.removeFromWishlist(this.props.user.id, foundWishlist.id, record_id)
     }
 
-    
   }
 
   wishlistPreview = () => {
@@ -78,7 +80,7 @@ class Wishlist extends React.Component {
 
     function mdp(dispatch){
       return{
-        recordDetails: (discogs_id) => dispatch(recordDetails(discogs_id)),
+        recordDetails: (recordObj) => dispatch(recordDetails(recordObj)),
         removeFromWishlist:  (userId, wishlistId, recordId) => dispatch(removeFromWishlist(userId, wishlistId, recordId))
       }
     }

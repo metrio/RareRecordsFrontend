@@ -8,7 +8,8 @@ import { addtoWishlist, addtoRecords, newRecordWishlist, recordDetails} from '..
 class RecordDiscogsSearchContainer extends React.Component {
 
     state = {
-        data: []
+        data: [],
+        results: 0
       }
 
   discogsRecordSearch = (searchObj) => {
@@ -25,7 +26,10 @@ class RecordDiscogsSearchContainer extends React.Component {
     fetch(`${url}`)
     .then(resp => resp.json())
     .then( query => {
-      this.setState({data: query.results})
+      console.log(query.pagination.items)
+      const items = query.pagination.items
+
+      this.setState({data: query.results , results: items})
     })
   }
 
@@ -38,14 +42,13 @@ class RecordDiscogsSearchContainer extends React.Component {
     const recordList = this.props.records
     const foundRecordArray = recordList.filter(recordEl => recordEl.discogs_id === details.discogs_id)
     const user = this.props.user
-
-    foundRecordArray[0]["notes"] = details.notes
-    const foundRecord = foundRecordArray[0]
-
-    console.log("In submitAlbum", foundRecord)
    
     if(foundRecordArray.length > 0){
-       this.props.addtoWishlist(user.id, foundRecord)
+
+      foundRecordArray[0]["notes"] = details.notes
+      const foundRecord = foundRecordArray[0]
+       
+      this.props.addtoWishlist(user.id, foundRecord)
     } else {
        this.props.newRecordWishlist(user.id, details)
     }
@@ -58,7 +61,7 @@ class RecordDiscogsSearchContainer extends React.Component {
     
     location.replace(`/records/${artist}/${album}`)
     
-    this.props.recordDetails(recordObj.discogs_id)
+    this.props.recordDetails(recordObj)
   }
    
 
@@ -67,9 +70,13 @@ class RecordDiscogsSearchContainer extends React.Component {
 
     return (
       <span className="search-page">
+          <h1> {data.length > 0 ? data[0].title : null} </h1>
+          <h2>Number of Results: {this.state.results}</h2>
+
         <div className="Record-Container">
           {data.map(recordEl => <RecordCard key={recordEl.id} recordObj={recordEl} submitHandler={this.submitAlbum} moreDetails={this.moreDetails}/>)}
         </div>
+        
         <div className="Search-Container">
           <SearchForm  submitHandler={this.discogsRecordSearch}/>
         </div>
