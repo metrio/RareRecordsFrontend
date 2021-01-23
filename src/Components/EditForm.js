@@ -16,7 +16,7 @@ class EditForm extends React.Component {
         e.preventDefault()
         
         let location = this.props.routerProps.history
-        location.replace("/home")
+        location.replace("/profile")
         this.props.submitHandler(this.state)
     }
 

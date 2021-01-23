@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
 import WishlistCard from '../Components/WishlistCards';
-import { recordDetails, removeFromWishlist } from '../Redux/actions'
+import { recordDetails, removeFromWishlist, editWishlistObj } from '../Redux/actions'
 
 
 class Wishlist extends React.Component {
@@ -13,6 +13,19 @@ class Wishlist extends React.Component {
 
   componentDidMount = () => {
     this.setState({userWishlist: this.props.user.wishlists})
+  }
+
+  matchWishlistRecord = (recordObj) => {
+    const userWishlist = this.state.userWishlist
+
+    console.log(userWishlist)
+
+    if (userWishlist.length === 0){
+      return null
+    } else {
+      const foundWishlist = userWishlist.find(wishlist => wishlist.record_id === recordObj.id)
+      return foundWishlist
+    }
   }
 
   moreDetails = (recordObj) => {
@@ -28,25 +41,17 @@ class Wishlist extends React.Component {
     this.props.recordDetails(recordObj)
   }
 
-  removeFromWishlist = (record_id) => {
-    const userWishlist = this.state.userWishlist
 
-    console.log(userWishlist)
-
-    if (userWishlist.length === 0){
-      return null
-    } else {
-      const foundWishlist = userWishlist.find(wishlist => wishlist.record_id === record_id)
-      this.props.removeFromWishlist(this.props.user.id, foundWishlist.id, record_id)
-    }
-
+  removeFromWishlist = (record) => {
+    const foundWishlist = this.matchWishlistRecord(record)
+    
+    this.props.removeFromWishlist(this.props.user.id, foundWishlist.id, record.id)
   }
 
   wishlistPreview = () => {
     const wishlistRecords = this.props.wishlists
 
-    return wishlistRecords.map(recordEl => <WishlistCard key={recordEl.id} recordEl={recordEl} submitHandler={this.moreDetails} removeHandler={this.removeFromWishlist}/>
-   )
+    return wishlistRecords.map(recordEl => <WishlistCard key={recordEl.id} recordEl={recordEl} submitHandler={this.moreDetails} removeHandler={this.removeFromWishlist} editWishlistObj={this.editWishlistObj}/>)
   }
 
 

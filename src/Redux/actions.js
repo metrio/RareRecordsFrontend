@@ -89,6 +89,8 @@ export function editUser(userObj, userId){
   }
 }
 
+
+
 export function loggingOut(){
   return { type: LOG_OUT}
 }
