@@ -11,19 +11,14 @@ const defaultState = {
 function userReducer(prevState = defaultState.user, action){
     switch(action.type){
         case "SIGN_UP":
-            console.log(action.payload)
             return action.payload
         case "LOG_IN":
-            console.log(action.payload)
             return action.payload
         case "RETURNING":
-            console.log(action.payload)
             return action.payload
         case "DELETE_USER":
-            console.log(action.payload)
             return action.payload
         case "EDIT_USER":
-            console.log(action.payload)
             return action.payload
         case "LOG_OUT":
             return null
@@ -36,6 +31,10 @@ function ownerReducer(prevState = defaultState.owner, action){
     switch(action.type){
         case "OWNER_LOG_IN":
             return action.payload
+        case "RETURNING_OWNER":
+            return action.payload
+        case "OWNER_LOG_OUT":
+            return null
         default:
             return prevState
     }
@@ -45,7 +44,6 @@ function ownerReducer(prevState = defaultState.owner, action){
 function wishlistReducer(prevState = defaultState.wishlists, action){
     switch(action.type) {
         case "SET_WISHLIST":
-            console.log(action.payload)
             return action.payload
         case "ADD_TO_WISHLIST":
             return [...prevState, action.payload]

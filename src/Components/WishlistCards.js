@@ -2,11 +2,6 @@ import React from 'react'
 
 class WishlistCard extends React.Component {
 
-    state = {
-        condition: "",
-        wantToEdit: false
-    }
-
     submitHandler = (e) => {
         e.preventDefault()
 
@@ -19,13 +14,6 @@ class WishlistCard extends React.Component {
         this.props.removeHandler(this.props.recordEl)
     }
 
-    editHandler = (e) => {
-        e.preventDefault()
-        const prevState = this.state.wantToEdit
-
-        this.setState({wantToEdit: !prevState})
-    }
-
     render () {
         const recordEl = this.props.recordEl
         return(
@@ -36,7 +24,6 @@ class WishlistCard extends React.Component {
                 <div>
                     <button onClick={this.submitHandler}>More Details!</button>
                     <button onClick={this.removeHandler}>Remove From Wishlist</button>
-                    <button onClick={this.editHandler}>Edit Wishlist Request</button>
                 </div>
 
                 {}

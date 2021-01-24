@@ -1,4 +1,4 @@
-import { ADD_TO_WISHLIST , REMOVE_FROM_WISHLIST, ADD_TO_RECORDS, UPDATE_RECORD_DETAILS , SET_RECORDS, SET_WISHLIST, LOG_IN, SIGN_UP, LOG_OUT, RETURNING, DELETE_USER, EDIT_USER, RECORD_DETAILS} from './actionTypes'
+import { ADD_TO_WISHLIST , REMOVE_FROM_WISHLIST, ADD_TO_RECORDS, UPDATE_RECORD_DETAILS , SET_RECORDS, SET_WISHLIST, LOG_IN, SIGN_UP, LOG_OUT, RETURNING, DELETE_USER, EDIT_USER, RECORD_DETAILS, OWNER_LOG_IN, RETURNING_OWNER, OWNER_LOG_OUT} from './actionTypes'
 import {URL} from '../index'
 
 
@@ -14,9 +14,10 @@ export function loginUser(userObj) {
       })
           .then(r => r.json())
           .then(checkedUserObj => {
-              localStorage.setItem("token", checkedUserObj.jwt)        
-              dispatch({type: LOG_IN, payload: checkedUserObj.user})
+              localStorage.setItem("token", checkedUserObj.jwt)
+              localStorage.setItem("user", checkedUserObj.user)   
 
+              dispatch({type: LOG_IN, payload: checkedUserObj.user})
           })
           .catch(console.log)
   }
@@ -63,7 +64,6 @@ export function deleteUser(userId){
       })
       .then(r=>r.json())
       .then(response => {
-          console.log(response)
           localStorage.clear()
           dispatch({type: DELETE_USER})
       })
@@ -83,7 +83,6 @@ export function editUser(userObj, userId){
       })
       .then(r=>r.json())
       .then(returnedUser => {
-          console.log(returnedUser)
           dispatch({type: EDIT_USER, payload: returnedUser.user})
       })
   }
@@ -98,7 +97,6 @@ export function loggingOut(){
  export function newRecordWishlist (userId, recordObj) {
      return function (dispatch, getState) {
         
-
          fetch(`${URL}/records`, {
              method: "POST",
              headers: {
@@ -116,28 +114,28 @@ export function loggingOut(){
          })
          .then(r => r.json())
          .then(record => {
-             return dispatch => {
-                 dispatch({type: ADD_TO_RECORDS, payload: record})
-
-                 record["notes"] = recordObj.notes
-                 record["resource_url"] = recordObj.resource_url
-                 record["format"] = recordObj.formats
-                 record["catno"] = recordObj.catno
-                 record["label"] = recordObj.label
-                 record["country"] = recordObj.country
-                 
-                 dispatch(addtoWishlist(userId, record))
-             }
+            record["notes"] = recordObj.notes
+            record["resource_url"] = recordObj.resource_url
+            record["format"] = recordObj.formats
+            record["catno"] = recordObj.catno
+            record["label"] = recordObj.label
+            record["country"] = recordObj.country
+            
+            dispatch(addtoRecordsaddtoWishlist(userId, record))
         })
      }
 } 
 
+export function addtoRecordsaddtoWishlist(userId, record){
+    return dispatch => {
+        dispatch({type: ADD_TO_RECORDS, payload: record})
+        dispatch(addtoWishlist(userId, record))
+    }
+}
+
 
 export function addtoWishlist(userId, recordDetails) {
-    return function (dispatch, getState) {
-
-       const parsed = parseInt(userId)
-        
+    return function (dispatch, getState) {        
             fetch(`${URL}/users/${userId}/wishlists/`, {
                 method: "POST",
                 headers: {
@@ -145,7 +143,7 @@ export function addtoWishlist(userId, recordDetails) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    user_id: parseInt(parsed) ,
+                    user_id: parseInt(userId) ,
                     discogs_id: parseInt(recordDetails.discogs_id) ,
                     record_id: parseInt(recordDetails.id),
                     notes: recordDetails.notes
@@ -158,6 +156,7 @@ export function addtoWishlist(userId, recordDetails) {
             })
         }
     }
+
 
 export function removeFromWishlist(userId, wishlistId, recordId) {
     return function(dispatch, getState) {
@@ -247,4 +246,36 @@ export function addtoRecords(recordObj) {
         
     }
 }
+
+export function loginOwner(ownerObj) {
+    return function(dispatch, getState){
+        fetch(`${URL}/owner-login`, {
+            method: "POST",
+            headers: {
+                "Accepts": "application/json",
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({ owner: ownerObj })
+        })
+            .then(r => r.json())
+            .then(checkedOwnerObj => {
+                localStorage.setItem("token", checkedOwnerObj.jwt)  
+                localStorage.setItem("owner", checkedOwnerObj.owner)  
+
+                dispatch({type: OWNER_LOG_IN, payload: checkedOwnerObj.owner})
+  
+            })
+            .catch(console.log)
+    }
+  }
+
+  export function ownerReturning(ownerObj) {
+    return dispatch => {
+        dispatch({type: RETURNING_OWNER, payload: ownerObj}) 
+        }
+    } 
+
+    export function ownerlogOut(){
+        return { type: OWNER_LOG_OUT}
+      }
 

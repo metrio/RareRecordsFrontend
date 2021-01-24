@@ -2,7 +2,7 @@ import React from 'react'
 import  RareRecords from '../assets/RareRecords.png'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { loggingOut } from '../Redux/actions'
+import { loggingOut , ownerlogOut} from '../Redux/actions'
 
 const NavBar = (props) => {
     
@@ -28,30 +28,47 @@ const NavBar = (props) => {
                 </NavLink>
 
             
-                {props.user ? 
-                <>
-                    <NavLink to="/profile" style={{ color: 'inherit', textDecoration: 'inherit'}}> 
-                        <button>Profile</button>
+
+                {props.owner ?
+                    <>
+                    <NavLink to="/owner-profile" style={{ color: 'inherit', textDecoration: 'inherit'}}> 
+                        <button>Owner Page</button>
                     </NavLink>
 
-                    <NavLink to="/login" style={{ color: 'inherit', textDecoration: 'inherit'}}>
+                    <NavLink to="/owner" style={{ color: 'inherit', textDecoration: 'inherit'}}>
                         <button onClick={()=> {
                         localStorage.removeItem("token")
-                        props.logOut()
+                        localStorage.removeItem("owner")
+                        props.ownerlogOut()
                         }} >Log Out </button>
                     </NavLink> 
-                </>  
-
-                :
-                <>
-                    <NavLink to="/login" style={{ color: 'inherit', textDecoration: 'inherit'}}> 
-                        <button>Log In</button>
-                    </NavLink>
-            
-                    <NavLink to="/signup" style={{ color: 'inherit', textDecoration: 'inherit'}}>
-                        <button>Sign Up</button>
-                    </NavLink>   
-                </>
+                    </>
+                    :
+                    props.user ? 
+                    <>
+                        <NavLink to="/profile" style={{ color: 'inherit', textDecoration: 'inherit'}}> 
+                            <button>Profile</button>
+                        </NavLink>
+    
+                        <NavLink to="/login" style={{ color: 'inherit', textDecoration: 'inherit'}}>
+                            <button onClick={()=> {
+                            localStorage.removeItem("token")
+                            localStorage.removeItem("user")
+                            props.logOut()
+                            }} >Log Out </button>
+                        </NavLink> 
+                    </>  
+    
+                    :
+                    <>
+                        <NavLink to="/login" style={{ color: 'inherit', textDecoration: 'inherit'}}> 
+                            <button>Log In</button>
+                        </NavLink>
+                
+                        <NavLink to="/signup" style={{ color: 'inherit', textDecoration: 'inherit'}}>
+                            <button>Sign Up</button>
+                        </NavLink>   
+                    </>
                 }
                     
                     
@@ -63,12 +80,16 @@ const NavBar = (props) => {
 
 
 function msp(state){
-    return { user: state.user }
+    return { 
+        user: state.user,
+        owner: state.owner 
+    }
 }
 
 function mdp(dispatch){
     return {
-        logOut: () => dispatch(loggingOut())
+        logOut: () => dispatch(loggingOut()),
+        ownerlogOut: () => dispatch(ownerlogOut())
     }
 }
 

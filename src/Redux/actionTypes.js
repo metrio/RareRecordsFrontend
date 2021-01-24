@@ -20,5 +20,5 @@ export const EDIT_USER = "EDIT_USER"
 export const LOG_OUT = "LOG_OUT"
 
 export const OWNER_LOG_IN =  "OWNER_LOG_IN"
-export const OWNER_RETURNING = "OWNER_RETURNING"
+export const RETURNING_OWNER = "RETURNING_OWNER"
 export const OWNER_LOG_OUT = "OWNER_LOG_OUT"

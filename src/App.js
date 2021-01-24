@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { setRecords, setWishlist, loginUser, signupUser, returningUser, editUser } from './Redux/actions';
+import { setRecords, setWishlist, loginUser, signupUser, returningUser, editUser, ownerReturning, loginOwner } from './Redux/actions';
 import NavBar from './Components/NavBar';
 import RecordDiscogsSearchContainer from './Containers/RecordDiscogsSearchContainer';
 import RecordStore from './Containers/RecordStore';
@@ -13,13 +13,18 @@ import SignUpForm from './Components/SignUpForm';
 import EditForm from './Components/EditForm';
 import {URL} from './index';
 import RecordDetails from './Components/RecordDetails';
+import OwnerLogInForm from './Components/OwnerLogInForm';
+import OwnerProfile from './Containers/OwnerProfile';
 
 class App extends React.Component {
   
   componentDidMount = () => {
     
     const token = localStorage.getItem("token")
-    if(token){
+    const user = localStorage.getItem("user")
+    const owner = localStorage.getItem("owner")
+
+    if(token && user){
       fetch(`${URL}/profile`, {
         method: "GET",
         headers: {
@@ -30,9 +35,25 @@ class App extends React.Component {
         .then(returningUser => {
           this.props.returning(returningUser.user)
           this.props.setRecords()
-          // this.props.setWishlist(returningUser.records)
+        })
+    } else if(token && owner) {
+      fetch(`${URL}/owner-profile`, {
+        method: "GET",
+        headers: {
+          "Authorization": 'Bearer ' + token
+        }
+      })
+        .then(r => r.json())
+        .then(returningOwner => {
+          this.props.ownerReturning(returningOwner.owner)
+          this.props.setRecords()
         })
     }
+  }
+
+
+  ownerLoginHandler = (ownerObj) => {
+    this.props.ownerLogin(ownerObj)
   }
 
   signupSubmitHandler = (userObj) => {
@@ -48,6 +69,7 @@ class App extends React.Component {
   }
   
   render () {
+
 
     return (
       
@@ -90,6 +112,16 @@ class App extends React.Component {
             )
           }} />
 
+          <Route path="/owner-profile" render={(routerProps)=> {
+            return(
+              <OwnerProfile routerProps={routerProps} /> )
+          }} />
+
+          <Route path="/owner" render={(routerProps) => {
+            return(
+              <OwnerLogInForm  submitHandler={this.ownerLoginHandler} routerProps={routerProps}/> )
+          }} />          
+
           <Route path="/" render={() => <HomePage />} />
 
         </Switch >
@@ -102,6 +134,7 @@ class App extends React.Component {
 function msp(state) {
   return {
     user: state.user,
+    owner: state.owner,
     records: state.records,
     wishlists: state.wishlists
   }
@@ -114,6 +147,8 @@ function mdp(dispatch){
     signup: (newUserObj) => dispatch(signupUser(newUserObj)),
     login: (userObj) => dispatch(loginUser(userObj)),
     returning: (userObj) => dispatch(returningUser(userObj)),
+    ownerLogin: (ownerObj) => dispatch(loginOwner(ownerObj)),
+    ownerReturing: (ownerObj) => dispatch(ownerReturning(ownerObj)),
     edit: (userObj, userId) => dispatch(editUser(userObj, userId))
     
   }
