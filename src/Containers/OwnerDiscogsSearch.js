@@ -3,7 +3,7 @@ import SearchForm from '../Components/SearchForm';
 import RecordCard from '../Components/RecordCard';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { addtoRecordStore, addtoRecords,  recordDetails, addtoRecordsAndRecordStore} from '../Redux/actions'
+import { recordDetails } from '../Redux/actions'
 import OwnerRecordCard from '../Components/OwnerRecordCard';
 
 class OwnerDiscogsSearchContainer extends React.Component {
@@ -44,6 +44,13 @@ class OwnerDiscogsSearchContainer extends React.Component {
     
     this.props.recordDetails(recordObj)
   }
+
+  addtoRecordStore = (recordObj) => {
+      let location = this.props.routerProps.history
+      
+      location.replace('/recorddetails-form')
+      this.props.recordDetails(recordObj)
+  }
    
 
   render () {
@@ -54,7 +61,7 @@ class OwnerDiscogsSearchContainer extends React.Component {
           <h1> {data.length > 0 ? data[0].title : null} </h1>
 
         <div className="Record-Container">
-          {data.map(recordEl => <OwnerRecordCard key={recordEl.id} recordObj={recordEl} submitHandler={this.addtoRecordStore} moreDetails={this.moreDetails}/>)}
+          {data.map(recordEl => <OwnerRecordCard key={recordEl.id} recordObj={recordEl} addtoRecordStore={this.addtoRecordStore} moreDetails={this.moreDetails}/>)}
         </div>
 
         <div className="Search-Container">
@@ -75,11 +82,7 @@ function msp(state) {
   
   function mdp(dispatch){
     return{
-      addtoRecordStore: (ownerObj, record) => dispatch(addtoRecordStore(ownerObj, record)),
-      addtoRecords: (details) => dispatch(addtoRecords(details)),
-      addtoRecordsAndRecordStore: (ownerObj, record) => dispatch(addtoRecordsAndRecordStore(ownerObj, record)),
-      recordDetails: (discogs_id) => dispatch(recordDetails(discogs_id))
-
+      recordDetails: (recordObj) => dispatch(recordDetails(recordObj))
     }
   }
 

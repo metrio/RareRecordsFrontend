@@ -104,7 +104,7 @@ function msp(state) {
       addtoWishlist: (userId, record) => dispatch(addtoWishlist(userId, record)),
       addtoRecords: (details) => dispatch(addtoRecords(details)),
       newRecordWishlist: (userId, recordDetails) => dispatch(newRecordWishlist(userId, recordDetails)),
-      recordDetails: (discogs_id) => dispatch(recordDetails(discogs_id))
+      recordDetails: (recordObj) => dispatch(recordDetails(recordObj))
 
     }
   }

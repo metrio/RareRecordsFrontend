@@ -40,8 +40,8 @@ class OwnerRecordCard extends React.Component {
 
     moreDetails = (e) => {
         e.preventDefault()
-        const recordObj = this.recordDetail
-        
+        const recordObj = this.recordDetail()
+
         this.props.moreDetails(recordObj)
     }
 
@@ -49,6 +49,7 @@ class OwnerRecordCard extends React.Component {
         e.preventDefault()
 
         const recordObj = this.recordDetail()
+        this.props.addtoRecordStore(recordObj)
     }
    
 

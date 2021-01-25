@@ -2,15 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 
-
 class RecordDetails extends React.Component {
 
 
     addtoRecordStore = (e) => {
         e.preventDefault()
-
+        const location = this.props.routerProps.history
         
+        location.replace('/recorddetails-form')
     }
+
 
     trackList = () => {
         const details = this.props.details
@@ -70,11 +71,6 @@ class RecordDetails extends React.Component {
     }
 }
 
-function mdp(dispatch){
-    return{
-
-    }
-}
 
 function msp(state){
     return{
@@ -84,5 +80,5 @@ function msp(state){
     }
 }
 
-export default connect(msp, mdp)(RecordDetails)
+export default connect(msp)(RecordDetails)
 
