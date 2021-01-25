@@ -16,6 +16,7 @@ import RecordDetails from './Components/RecordDetails';
 import OwnerLogInForm from './Components/OwnerLogInForm';
 import OwnerProfile from './Containers/OwnerProfile';
 import OwnerDiscogsSearch from './Containers/OwnerDiscogsSearch';
+import RecordDetailForm from './Components/RecordDetailForm';
 
 class App extends React.Component {
   
@@ -116,6 +117,12 @@ class App extends React.Component {
           <Route path='/records/:artist/:record_name/' render={(routerProps) => {
             return(
               <RecordDetails routerProps={routerProps}/>
+            )
+          }} />
+
+          <Route path='/recorddetails-form' render={(routerProps) => {
+            return(
+              <RecordDetailForm routerProps={routerProps}/>
             )
           }} />
 

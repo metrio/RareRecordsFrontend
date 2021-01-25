@@ -294,8 +294,43 @@ export function setRecordStore(){
     }
 }
 
-export function addtoRecordsAndRecordStore(){
-    
+export function addtoRecordsAndRecordStore(ownerObj, recordObj){
+    return function (dispatch, getState) {
+        
+        fetch(`${URL}/records`, {
+            method: "POST",
+            headers: {
+                "Accepts": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                album_name: recordObj.album_name,
+                artist_name: recordObj.artist_name,
+                discogs_id: parseInt(recordObj.discogs_id),
+                thumb_url: recordObj.thumb_url,
+                img_url: recordObj.img_url,
+                year_of_release: parseInt(recordObj.year_of_release)
+            })
+        })
+        .then(r => r.json())
+        .then(record => {
+           record["notes"] = recordObj.notes
+           record["resource_url"] = recordObj.resource_url
+           record["format"] = recordObj.formats
+           record["catno"] = recordObj.catno
+           record["label"] = recordObj.label
+           record["country"] = recordObj.country
+
+           dispatch(finishAddtoStore(ownerObj, record))
+       })
+    }
+}
+
+export function finishAddtoStore(ownerObj, record){
+    return dispatch => {
+        dispatch({type: ADD_TO_RECORDS, payload: record})
+        dispatch(addtoRecordStore(ownerObj, record))
+    }
 }
 
 export function addtoRecordStore(ownerObj, recordObj){
@@ -307,12 +342,14 @@ export function addtoRecordStore(ownerObj, recordObj){
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-
+                record_store_id: ownerObj.record_store.id,
+                discogs_id: recordObj.discogs_id,
+                record_id: recordObj.id
             })
         })
         .then(r => r.json())
         .then(recordstoreRecordObj =>{
-
+            dispatch({type: ADD_TO_RECORDSTORE, payload: recordObj})
         })
     }
 }

@@ -3,7 +3,8 @@ import SearchForm from '../Components/SearchForm';
 import RecordCard from '../Components/RecordCard';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { addtoWishlist, addtoRecords, newRecordWishlist, recordDetails} from '../Redux/actions'
+import { addtoRecordStore, addtoRecords,  recordDetails, addtoRecordsAndRecordStore} from '../Redux/actions'
+import OwnerRecordCard from '../Components/OwnerRecordCard';
 
 class OwnerDiscogsSearchContainer extends React.Component {
 
@@ -33,32 +34,6 @@ class OwnerDiscogsSearchContainer extends React.Component {
     })
   }
 
-  
-  /** Double Checks to see if we already have the record in the backend,
-   * if it does then we just add right to the wishlist,
-   * if not then we add to the backend then we add to our wishlist
-   */
-  submitAlbum = (details) => {
-    const recordList = this.props.records
-    const foundRecordArray = recordList.filter(recordEl => recordEl.discogs_id === details.discogs_id)
-    const user = this.props.user
-   
-    if(foundRecordArray.length > 0){
-
-      foundRecordArray[0]["notes"] = details.notes
-      foundRecordArray[0]["resource_url"] = details.resource_url
-      foundRecordArray[0]["format"] = details.formats
-      foundRecordArray[0]["catno"] = details.catno
-      foundRecordArray[0]["label"] = details.label
-      foundRecordArray[0]["country"] = details.country
-
-      const foundRecord = foundRecordArray[0]
-       
-      this.props.addtoWishlist(user.id, foundRecord)
-    } else {
-       this.props.newRecordWishlist(user.id, details)
-    }
-  }  
 
   moreDetails = (recordObj) => {
     let location = this.props.routerProps.history
@@ -79,7 +54,7 @@ class OwnerDiscogsSearchContainer extends React.Component {
           <h1> {data.length > 0 ? data[0].title : null} </h1>
 
         <div className="Record-Container">
-          {data.map(recordEl => <RecordCard key={recordEl.id} recordObj={recordEl} submitHandler={this.submitAlbum} moreDetails={this.moreDetails}/>)}
+          {data.map(recordEl => <OwnerRecordCard key={recordEl.id} recordObj={recordEl} submitHandler={this.addtoRecordStore} moreDetails={this.moreDetails}/>)}
         </div>
 
         <div className="Search-Container">
@@ -93,17 +68,16 @@ class OwnerDiscogsSearchContainer extends React.Component {
 
 function msp(state) {
     return {
-      user: state.user,
-      wishlists: state.wishlists,
+      owner: state.owner,
       records: state.records
     }
   }
   
   function mdp(dispatch){
     return{
-      addtoWishlist: (userId, record) => dispatch(addtoWishlist(userId, record)),
+      addtoRecordStore: (ownerObj, record) => dispatch(addtoRecordStore(ownerObj, record)),
       addtoRecords: (details) => dispatch(addtoRecords(details)),
-      newRecordWishlist: (userId, recordDetails) => dispatch(newRecordWishlist(userId, recordDetails)),
+      addtoRecordsAndRecordStore: (ownerObj, record) => dispatch(addtoRecordsAndRecordStore(ownerObj, record)),
       recordDetails: (discogs_id) => dispatch(recordDetails(discogs_id))
 
     }

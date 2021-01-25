@@ -4,17 +4,11 @@ import React from 'react'
 class OwnerRecordCard extends React.Component {
     
     state = {
-        wishlist: false,
-        condition: ""
+        condition: "",
+        moreDetails: false
     }
 
-    wishlistHandler = (e) => {
-        e.preventDefault()
-
-        const prevState = this.state.wishlist
-        this.setState({wishlist: !prevState})
-    }
-
+    
     changeHandler = (e) => {
         this.setState({condition: e.target.value}) 
     }
@@ -46,18 +40,17 @@ class OwnerRecordCard extends React.Component {
 
     moreDetails = (e) => {
         e.preventDefault()
-        const recordObj = this.recordDetail()
-
+        const recordObj = this.recordDetail
+        
         this.props.moreDetails(recordObj)
     }
 
-
-    submitHandler = (e) => {
+    addtoRecordStore = (e) => {
         e.preventDefault()
-        const wishlistObj = this.recordDetail()
 
-        this.props.submitHandler(wishlistObj)
+        const recordObj = this.recordDetail()
     }
+   
 
   
 
@@ -65,20 +58,11 @@ class OwnerRecordCard extends React.Component {
         const record = this.recordDetail()
 
         return(
-            <div className="-div">
+            <div className="recordcard-div">
                 <img src={record.img_url} alt={record.album_name} style={{width:'auto', height:'125px'}}/>
                 <h6>Year of Release: {record.year_of_release}</h6>
-                <button onClick={this.wishlistHandler}>Want to add to Wishlist?</button>
-                {this.state.wishlist 
-                ? 
-                <form onSubmit={this.submitHandler}>
-                    <label>What condition would you like the record?</label>
-                    <input type="text" name="condition" placeholder= "ie Mint, Fair, Near Mint" value={this.state.condition} onChange={this.changeHandler}/>
-                    <button>Add to Wishlist</button>
-                </form>
-                
-                : null}
-                <button onClick={this.moreDetails}>More Details!</button>
+                <button onClick={this.addtoRecordStore}>Add to Store</button>
+                <button onClick={this.moreDetails}>More Details</button>
             </div>
         )
     }

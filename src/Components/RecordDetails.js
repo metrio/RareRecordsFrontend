@@ -6,6 +6,11 @@ import { connect } from 'react-redux';
 class RecordDetails extends React.Component {
 
 
+    addtoRecordStore = (e) => {
+        e.preventDefault()
+
+        
+    }
 
     trackList = () => {
         const details = this.props.details
@@ -31,8 +36,21 @@ class RecordDetails extends React.Component {
              ?
                 <h1>Loading</h1>
              : 
-
                 
+                this.props.owner ? 
+                    <span>
+                        <img src={details.thumb_url} alt={details.title} />
+                        <h3>{details.album_name} - {details.artist_name}</h3>
+                        <h3>{console.log(this.props.details)}</h3>
+                        <button onClick={this.addtoRecordStore}>Add to RecordShop</button>
+
+                        <div className="tracklist">
+                            {this.trackList()}
+                        </div>
+                    </span>
+                    
+                :
+
                     <span>
                         <img src={details.thumb_url} alt={details.title} />
                         <h3>{details.album_name} - {details.artist_name}</h3>
@@ -61,7 +79,8 @@ function mdp(dispatch){
 function msp(state){
     return{
         details: state.details,
-        records: state.records
+        records: state.records,
+        owner: state.owner
     }
 }
 
