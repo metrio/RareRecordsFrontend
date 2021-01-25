@@ -26,7 +26,7 @@ class RecordStore extends React.Component {
     function msp(state) {
         return {
           user: state.user,
-          wishlists: state.wishlists,
+          owner: state.owner,
           records: state.records
         }
       }

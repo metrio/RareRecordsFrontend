@@ -22,17 +22,25 @@ const NavBar = (props) => {
                 <NavLink to="/store" style={{ color: 'inherit', textDecoration: 'inherit'}}> 
                     <button>Rare Records Store</button> 
                 </NavLink>
+                
+                { props.owner ?
 
-                <NavLink to="/discogs-search" style={{ color: 'inherit', textDecoration: 'inherit'}}> 
-                    <button>Discogs Search</button> 
-                </NavLink>
+                    <NavLink to="/owner-discogs-search" style={{ color: 'inherit', textDecoration: 'inherit'}}>
+                        <button>Discogs Search</button>
+                    </NavLink>
+                    :
+                    <NavLink to="/discogs-search" style={{ color: 'inherit', textDecoration: 'inherit'}}> 
+                        <button>Discogs Search</button> 
+                    </NavLink>
+                }
+                
 
             
 
                 {props.owner ?
                     <>
                     <NavLink to="/owner-profile" style={{ color: 'inherit', textDecoration: 'inherit'}}> 
-                        <button>Owner Page</button>
+                        <button>Owner Profile</button>
                     </NavLink>
 
                     <NavLink to="/owner" style={{ color: 'inherit', textDecoration: 'inherit'}}>

@@ -5,7 +5,8 @@ const defaultState = {
     owner: null,
     wishlists: [],
     details: [],
-    records: []
+    records: [],
+    recordstore: []
 }
 
 function userReducer(prevState = defaultState.user, action){
@@ -77,6 +78,20 @@ function detailsReducer(prevState = defaultState.details, action){
     }
 }
 
+function recordstoreReducer(prevState = defaultState.recordstore, action){
+    switch(action.type){
+        case "SET_RECORDSTORE":
+            return action.payload
+        case "ADD_TO_RECORDSHOP":
+            return [...prevState, action.payload]
+        case "UPDATE_RECORDSHOP":
+            return action.payload
+        default:
+            return prevState
+    }
+}
+
+
 
 
 const rootReducer = combineReducers({
@@ -84,7 +99,8 @@ const rootReducer = combineReducers({
     owner: ownerReducer,
     wishlists: wishlistReducer,
     details: detailsReducer,
-    records: recordReducer
+    records: recordReducer,
+    recordstore: recordstoreReducer
 })
 
 export default rootReducer

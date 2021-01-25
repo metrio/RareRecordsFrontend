@@ -1,4 +1,4 @@
-import { ADD_TO_WISHLIST , REMOVE_FROM_WISHLIST, ADD_TO_RECORDS, UPDATE_RECORD_DETAILS , SET_RECORDS, SET_WISHLIST, LOG_IN, SIGN_UP, LOG_OUT, RETURNING, DELETE_USER, EDIT_USER, RECORD_DETAILS, OWNER_LOG_IN, RETURNING_OWNER, OWNER_LOG_OUT} from './actionTypes'
+import { ADD_TO_WISHLIST , REMOVE_FROM_WISHLIST, ADD_TO_RECORDS, UPDATE_RECORD_DETAILS , SET_RECORDS, SET_WISHLIST, LOG_IN, SIGN_UP, LOG_OUT, RETURNING, DELETE_USER, EDIT_USER, RECORD_DETAILS, OWNER_LOG_IN, RETURNING_OWNER, OWNER_LOG_OUT, SET_RECORDSTORE, ADD_TO_RECORDSTORE, UPDATE_RECORDSTORE} from './actionTypes'
 import {URL} from '../index'
 
 
@@ -120,7 +120,7 @@ export function loggingOut(){
             record["catno"] = recordObj.catno
             record["label"] = recordObj.label
             record["country"] = recordObj.country
-            
+
             dispatch(addtoRecordsaddtoWishlist(userId, record))
         })
      }
@@ -192,9 +192,8 @@ export function setRecords() {
                 "Content-Type": "application/json"
             }
         })
-            .then(r=> r.json())
+            .then(r => r.json())
             .then(records => {
-               localStorage.setItem("recordId", records.id)
               return dispatch({type: SET_RECORDS, payload: records})
            })
         
@@ -269,13 +268,53 @@ export function loginOwner(ownerObj) {
     }
   }
 
-  export function ownerReturning(ownerObj) {
+export function ownerReturning(ownerObj) {
     return dispatch => {
         dispatch({type: RETURNING_OWNER, payload: ownerObj}) 
         }
     } 
 
-    export function ownerlogOut(){
-        return { type: OWNER_LOG_OUT}
-      }
+export function ownerlogOut(){
+    return { type: OWNER_LOG_OUT}
+}
+
+export function setRecordStore(){
+    return function(dispatch, getState){
+        fetch(`${URL}/record_stores`,{
+            method: "GET",
+            headers: {
+                "Accepts": "application/json",
+                "Content-Type": "application/json"
+            }
+        })
+        .then(r => r.json())
+        .then(recordStoreObj => {
+            dispatch({type: SET_RECORDSTORE, payload: recordStoreObj.records})
+        })
+    }
+}
+
+export function addtoRecordsAndRecordStore(){
+    
+}
+
+export function addtoRecordStore(ownerObj, recordObj){
+    return function(dispatch, getState){
+        fetch(`${URL}/record_stores/1/recordstore_records`,{
+            method: "POST",
+            headers: {
+                "Accepts": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+
+            })
+        })
+        .then(r => r.json())
+        .then(recordstoreRecordObj =>{
+
+        })
+    }
+}
+
 

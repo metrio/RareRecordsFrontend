@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { setRecords, setWishlist, loginUser, signupUser, returningUser, editUser, ownerReturning, loginOwner } from './Redux/actions';
+import { setRecords, setWishlist, loginUser, signupUser, returningUser, editUser, ownerReturning, loginOwner, setRecordStore } from './Redux/actions';
 import NavBar from './Components/NavBar';
 import RecordDiscogsSearchContainer from './Containers/RecordDiscogsSearchContainer';
 import RecordStore from './Containers/RecordStore';
@@ -15,6 +15,7 @@ import {URL} from './index';
 import RecordDetails from './Components/RecordDetails';
 import OwnerLogInForm from './Components/OwnerLogInForm';
 import OwnerProfile from './Containers/OwnerProfile';
+import OwnerDiscogsSearch from './Containers/OwnerDiscogsSearch';
 
 class App extends React.Component {
   
@@ -44,9 +45,10 @@ class App extends React.Component {
         }
       })
         .then(r => r.json())
-        .then(returningOwner => {
-          this.props.ownerReturning(returningOwner.owner)
+        .then(ownerReturning => {
+          this.props.ownerReturning(ownerReturning.owner)
           this.props.setRecords()
+          this.props.setRecordStore()
         })
     }
   }
@@ -84,6 +86,11 @@ class App extends React.Component {
           <Route path="/discogs-search"render={(routerProps)=> {
             return(
               <RecordDiscogsSearchContainer routerProps={routerProps} /> )
+          }} />
+
+          <Route path="/owner-discogs-search"render={(routerProps)=> {
+            return(
+              <OwnerDiscogsSearch routerProps={routerProps} /> )
           }} />
 
           <Route path="/store" render={(routerProps) => {
@@ -136,7 +143,8 @@ function msp(state) {
     user: state.user,
     owner: state.owner,
     records: state.records,
-    wishlists: state.wishlists
+    wishlists: state.wishlists,
+    recordstore: state.recordstore
   }
 }
 
@@ -149,7 +157,8 @@ function mdp(dispatch){
     returning: (userObj) => dispatch(returningUser(userObj)),
     ownerLogin: (ownerObj) => dispatch(loginOwner(ownerObj)),
     ownerReturing: (ownerObj) => dispatch(ownerReturning(ownerObj)),
-    edit: (userObj, userId) => dispatch(editUser(userObj, userId))
+    edit: (userObj, userId) => dispatch(editUser(userObj, userId)),
+    setRecordStore: ()=> dispatch(setRecordStore())
     
   }
 }
