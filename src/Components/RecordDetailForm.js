@@ -26,30 +26,45 @@ class RecordDetailForm extends React.Component {
     componentDidMount = () => {
       const recordObj = this.props.details
 
-      if(recordObj){
-        this.setState({
+      if(recordObj === undefined){
+          return null
+        } else {
+          this.setState({
             album_name: recordObj.album_name,
             artist_name: recordObj.artist_name,
             discogs_id: recordObj.discogs_id,
             thumb_url: recordObj.thumb_url,
             img_url: recordObj.img_url,
             year_of_release: recordObj.year_of_release
-        })
+          })
       }
-      console.log(this.props.details)
-
     }
+      
+
+  
 
     fromDiscogs = () => {
       const recordObj = this.props.details
 
-      if(recordObj){
-          this.tracklist(recordObj)
-          this.year(recordObj)
-          this.format(recordObj)
-          this.catno(recordObj)
-          this.label(recordObj)
-          this.country(recordObj)
+      if(recordObj === undefined){
+         return null
+      } else {
+        return (
+          <>
+              <h6>tracklist</h6>
+                {this.tracklist(recordObj)}
+              <h6>format</h6>
+                {this.format(recordObj)}
+              <h6>catno</h6>
+                {this.catno(recordObj)}
+              <h6>label</h6>
+                {this.label(recordObj)}
+              <h6>country</h6>
+                {this.country(recordObj)}
+              <h6>year</h6>
+                {this.year(recordObj)}
+              </>
+        )
       }
     }
 
@@ -57,7 +72,48 @@ class RecordDetailForm extends React.Component {
       return recordObj.tracklist.map(trackEl => <li key={trackEl.position}> {trackEl.title}</li>)
     }
 
+    format = (recordObj) => {
+      const format = recordObj.format
+
+      if(typeof format === "object"){
+        console.log("In format", format[0].name , format[0].descriptions, format[0].text)
+        return (
+          <>
+          <li>Media Format: {format[0].name}</li>
+          <li>Disc Color: {format[0].text}</li>
+          {format[0].descriptions.map(ele => <li> { ele }</li>)}
+          </>
+        )
+      }
+    }
+
+    catno = (recordObj) => {
+        const catno = recordObj.catno
+        return <li> { catno } </li>
+    }
     
+    label = (recordObj) => {
+      const label = recordObj.label
+      console.log("In label", label)
+
+      return label.map(ele => <li> { ele }</li>)
+    }
+
+
+    country = (recordObj) => {
+      const country = recordObj.country
+      console.log("In country", country)
+
+      return <li> { country } </li>
+    }
+
+    year = (recordObj) => {
+      const year = recordObj.year_of_release
+      console.log("In year", year)
+
+      return <li> { year } </li>
+    }
+
 
     changeHandler = (e) => {
       this.setState({ [e.target.name]: e.target.value})
@@ -103,19 +159,9 @@ class RecordDetailForm extends React.Component {
             <div className="discogs-details">
               <h4>From Discogs </h4>
 
-              <>
-              <h6>tracklist</h6>
+              <img src={this.props.details.img_url} alt={this.props.details.album_name} />
 
-              <h6>formt</h6>
-
-              <h6>catno</h6>
-
-              <h6>label</h6>
-
-              <h6>country</h6>
-
-              <h6>year</h6>
-              </>
+             {this.fromDiscogs()}
 
 
             </div>

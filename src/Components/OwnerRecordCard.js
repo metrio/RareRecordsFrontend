@@ -40,8 +40,8 @@ class OwnerRecordCard extends React.Component {
 
     moreDetails = (e) => {
         e.preventDefault()
+        
         const recordObj = this.recordDetail()
-
         this.props.moreDetails(recordObj)
     }
 

@@ -41,7 +41,6 @@ class OwnerDiscogsSearchContainer extends React.Component {
     const album = recordObj.album_name.replace(/\s+/g, '-')
     
     location.replace(`/records/${artist}/${album}`)
-    
     this.props.recordDetails(recordObj)
   }
 
@@ -76,7 +75,8 @@ class OwnerDiscogsSearchContainer extends React.Component {
 function msp(state) {
     return {
       owner: state.owner,
-      records: state.records
+      records: state.records,
+      details: state.details
     }
   }
   

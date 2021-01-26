@@ -7,30 +7,36 @@ import { addtoWishlist, addtoRecords, newRecordWishlist, recordDetails} from '..
 
 class RecordDiscogsSearchContainer extends React.Component {
 
-    state = {
+    constructor(props) {
+      super(props)
+      console.log(props)
+      this.state = {
         data: [],
         results: 0
       }
+    }
 
   discogsRecordSearch = (searchObj) => {
     const token = process.env.REACT_APP_DISCOGS_API_KEY
     const artist = searchObj.artist_name
     const record = searchObj.record_name
+    console.log(this)
     
     const url = `https://api.discogs.com/database/search?artist=${artist}&release_title=${record}&format=vinyl&token=${token}`
 
-    this.componentDidMount(url)
+    this.fetchRecord(url)
   }
 
-  componentDidMount = (url) => {
-    fetch(`${url}`)
-    .then(resp => resp.json())
-    .then( query => {
-      console.log(query.pagination.items)
-      const items = query.pagination.items
 
-      this.setState({data: query.results , results: items})
-    })
+  fetchRecord = async (url) => {
+    fetch(`${url}`)
+      .then(resp => resp.json())
+      .then( query => {
+        console.log(query.pagination.items)
+        const items = query.pagination.items
+
+        this.setState({data: query.results , results: items})
+      })
   }
 
   
