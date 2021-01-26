@@ -51,19 +51,30 @@ class RecordDetailForm extends React.Component {
       } else {
         return (
           <>
-              <h6>tracklist</h6>
+            <div className="tracklist">
+              <h4>Tracklist</h4>
                 {this.tracklist(recordObj)}
-              <h6>format</h6>
-                {this.format(recordObj)}
-              <h6>catno</h6>
-                {this.catno(recordObj)}
-              <h6>label</h6>
+            </div>
+
+            <div className="basic-info">
+              <h6>Catalog No.</h6>
+                  {this.catno(recordObj)}
+              <h6>Country</h6>
+                  {this.country(recordObj)}
+              <h6>Year</h6>
+                  {this.year(recordObj)}
+            </div>
+
+            <div className="label">
+              <h6>Labels</h6>
                 {this.label(recordObj)}
-              <h6>country</h6>
-                {this.country(recordObj)}
-              <h6>year</h6>
-                {this.year(recordObj)}
-              </>
+            </div>
+
+            <div className="format-info">
+              <h6>Format</h6>
+                {this.format(recordObj)}
+            </div>
+          </>
         )
       }
     }
