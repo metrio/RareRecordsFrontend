@@ -62,6 +62,16 @@ class OwnerRecordCard extends React.Component {
             <div className="recordcard-div">
                 <img src={record.img_url} alt={record.album_name} style={{width:'auto', height:'125px'}}/>
                 <h6>Year of Release: {record.year_of_release}</h6>
+                <h6>Format: 
+                    {record.format === undefined ? null 
+                    
+                    :
+                    <>
+                    {record.format[0].descriptions.map(ele => <li>{ ele }</li>)}
+                    </>
+                            
+                    }
+                </h6>
                 <button onClick={this.addtoRecordStore}>Add to Store</button>
                 <button onClick={this.moreDetails}>More Details</button>
             </div>

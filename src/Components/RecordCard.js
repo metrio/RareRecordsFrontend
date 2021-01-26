@@ -56,6 +56,7 @@ class RecordCard extends React.Component {
         e.preventDefault()
         const wishlistObj = this.recordDetail()
 
+        this.wishlistHandler()
         this.props.submitHandler(wishlistObj)
     }
 
@@ -67,7 +68,17 @@ class RecordCard extends React.Component {
         return(
             <div className="recordCard-div">
                 <img src={record.img_url} alt={record.album_name} style={{width:'auto', height:'125px'}}/>
-                <h6>Year of Release: {record.year_of_release}</h6>
+                <h5>Year of Release: {record.year_of_release}</h5>
+                <h6>Format: 
+                    {record.format === undefined ? null 
+                    
+                    :
+                    <>
+                    {record.format[0].descriptions.map(ele => <li>{ ele }</li>)}
+                    </>
+                            
+                    }
+                </h6>
                 <button onClick={this.wishlistHandler}>Want to add to Wishlist?</button>
                 {this.state.wishlist 
                 ? 

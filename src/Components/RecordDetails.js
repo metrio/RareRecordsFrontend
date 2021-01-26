@@ -114,6 +114,7 @@ class RecordDetails extends React.Component {
                         <img src={details.thumb_url} alt={details.title} />
                         <h3>{details.album_name} - {details.artist_name}</h3>
                         <h3>{console.log(this.props.details)}</h3>
+                        
                         <button onClick={this.addtoRecordStore}>Add to RecordShop</button>
 
                         <div className="discog-details">
@@ -126,6 +127,7 @@ class RecordDetails extends React.Component {
                     <span>
                         <img src={details.thumb_url} alt={details.title} />
                         <h3>{details.album_name} - {details.artist_name}</h3>
+                        
                         <h3>{console.log(this.props.details)}</h3>
 
                         <div className="discog-details">

@@ -39,9 +39,7 @@ class RecordDetailForm extends React.Component {
           })
       }
     }
-      
-
-  
+        
 
     fromDiscogs = () => {
       const recordObj = this.props.details
@@ -199,7 +197,7 @@ class RecordDetailForm extends React.Component {
               <br/>
 
               <label for="format">Format</label>
-              <input type="text" id="format" name="format" value={this.state.label} onChange={this.changeHandler}/>
+              <input type="text" id="format" name="format" value={this.state.format} onChange={this.changeHandler}/>
               <br/>
 
               <label for="catno">Catalog Number</label>
@@ -227,7 +225,7 @@ class RecordDetailForm extends React.Component {
                {this.state.in_store ?
                <>
                   <label for="copies">Number of Copies in Store</label>
-                  <input type="number" id="copies" name="copies" value={this.state.album_name} onChange={this.changeHandler}/>
+                  <input type="number" id="copies" name="copies" value={this.state.copies} onChange={this.changeHandler}/>
                </>
 
               :
