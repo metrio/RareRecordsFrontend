@@ -10,16 +10,17 @@ class FormContainer extends React.Component{
         const recordList = this.props.records
         const foundRecordArray = recordList.filter(recordEl => recordEl.discogs_id === record.discogs_id)
         const owner = this.props.owner
+        let location = this.props.routerProps.history
        
         if(foundRecordArray.length > 0){
-    
           const foundRecord = record
-
           foundRecord.id = foundRecordArray[0].id
            
+          location.replace(`/record-store`)
           this.props.updateBackendRecords(owner, foundRecord)
         } else {
-           this.props.addtoRecordsAndRecordStore(owner, record)
+            location.replace(`/record-store`)
+            this.props.addtoRecordsAndRecordStore(owner, record)
         }
       }  
 
@@ -30,7 +31,7 @@ class FormContainer extends React.Component{
         return(
             <>
             {console.log("From FormContainer ", details)}
-            <RecordDetailForm detailsObj={details} submitHandler={this.submitAlbum}/>
+            <RecordDetailForm detailsObj={details} submitHandler={this.submitAlbum} />
             </>
         )
 

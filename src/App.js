@@ -38,6 +38,7 @@ class App extends React.Component {
         .then(returningUser => {
           this.props.returning(returningUser.user)
           this.props.setRecords()
+          this.props.setRecordStore()
         })
     } else if(token && owner) {
       fetch(`${URL}/owner-profile`, {
@@ -53,6 +54,7 @@ class App extends React.Component {
           this.props.setRecordStore()
         })
     }
+
   }
 
 
@@ -76,6 +78,7 @@ class App extends React.Component {
 
 
     return (
+  
       
       <div className="App">
         <NavBar />

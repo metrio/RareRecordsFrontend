@@ -284,7 +284,7 @@ export function ownerlogOut(){
 
 export function setRecordStore(){
     return function(dispatch, getState){
-        fetch(`${URL}/record_stores`,{
+        fetch(`${URL}/record_stores/1`,{
             method: "GET",
             headers: {
                 "Accepts": "application/json",
@@ -293,6 +293,7 @@ export function setRecordStore(){
         })
         .then(r => r.json())
         .then(recordStoreObj => {
+            console.log(recordStoreObj)
             dispatch({type: SET_RECORDSTORE, payload: recordStoreObj.records})
         })
     }
@@ -324,11 +325,13 @@ export function addtoRecordsAndRecordStore(ownerObj, recordObj){
                 official: recordObj.official,
                 thumb_url: recordObj.thumb_url,
                 img_url: recordObj.img_url,
+                in_store: recordObj.in_store,
                 year_of_release: parseInt(recordObj.year_of_release)
             })
         })
         .then(r => r.json())
         .then(record => {
+            console.log(record)
             dispatch(finishAddtoStore(ownerObj, record))
        })
     }
@@ -370,6 +373,7 @@ export function updateBackendRecords(owner, recordObj){
                 official: recordObj.official,
                 thumb_url: recordObj.thumb_url,
                 img_url: recordObj.img_url,
+                in_store: recordObj.in_store,
                 year_of_release: parseInt(recordObj.year_of_release)
             })
         })

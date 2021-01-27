@@ -1,4 +1,4 @@
-import React, { memo } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { exitDetails } from '../Redux/actions'
 
@@ -39,18 +39,6 @@ class RecordDetailForm extends React.Component{
     }
 
 
-    setDetails = memo(()=> {
-      const recordObj = this.props.detailsObj
-      this.setState({
-        album_name: recordObj.album_name,
-        artist_name: recordObj.artist_name,
-        discogs_id: recordObj.discogs_id,
-        thumb_url: recordObj.thumb_url,
-        img_url: recordObj.img_url,
-        year_of_release: parseInt(recordObj.year_of_release)     
-      })
-    })
-  
     fromDiscogs = () => {
       const recordObj = this.props.detailsObj
 
@@ -102,11 +90,9 @@ class RecordDetailForm extends React.Component{
 
     submitRecordHandler = (e) => {
       e.preventDefault()
-      let location = this.props.routerProps.history
       const record = this.state
       
-      location.replace(`/record-store`)
-      this.submitAlbum(record)
+      this.props.submitHandler(record)
     }
 
     componentWillUnmount = () => {
@@ -173,6 +159,7 @@ class RecordDetailForm extends React.Component{
                 <label for="in_store">In Store?</label>
                 <input type="checkbox" id="in_store" name="in_store" onClick={this.booleanHandler}/>
               </div>
+              <br/>
               <br/>
 
 
