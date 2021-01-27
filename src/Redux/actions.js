@@ -1,4 +1,4 @@
-import { ADD_TO_WISHLIST , REMOVE_FROM_WISHLIST, ADD_TO_RECORDS, UPDATE_RECORD_DETAILS , SET_RECORDS, SET_WISHLIST, LOG_IN, SIGN_UP, LOG_OUT, RETURNING, DELETE_USER, EDIT_USER, RECORD_DETAILS, OWNER_LOG_IN, RETURNING_OWNER, OWNER_LOG_OUT, SET_RECORDSTORE, ADD_TO_RECORDSTORE, UPDATE_RECORDSTORE} from './actionTypes'
+import { ADD_TO_WISHLIST , REMOVE_FROM_WISHLIST, ADD_TO_RECORDS, UPDATE_RECORD_DETAILS , SET_RECORDS, SET_WISHLIST, LOG_IN, SIGN_UP, LOG_OUT, RETURNING, DELETE_USER, EDIT_USER, RECORD_DETAILS, OWNER_LOG_IN, RETURNING_OWNER, OWNER_LOG_OUT, SET_RECORDSTORE, ADD_TO_RECORDSTORE, UPDATE_RECORDSTORE, EXIT_DETAILS} from './actionTypes'
 import {URL} from '../index'
 
 
@@ -212,6 +212,10 @@ export function recordDetails(recordObj) {
         })
     }
 }
+
+export function exitDetails() {
+    return ({type: EXIT_DETAILS})
+}
         
 
 export function addtoRecords(recordObj) {
@@ -294,6 +298,10 @@ export function setRecordStore(){
     }
 }
 
+/** Doesn't Exist in backend,
+ * add to Records, then add to RecordStoreRecords,
+ * Update FrontEnd Records and RecordStore
+ */
 export function addtoRecordsAndRecordStore(ownerObj, recordObj){
     return function (dispatch, getState) {
         
@@ -306,7 +314,14 @@ export function addtoRecordsAndRecordStore(ownerObj, recordObj){
             body: JSON.stringify({
                 album_name: recordObj.album_name,
                 artist_name: recordObj.artist_name,
+                catno: recordObj.catno,
+                condition: recordObj.condition,
+                country: recordObj.country,
+                description: recordObj.description,
                 discogs_id: parseInt(recordObj.discogs_id),
+                format: recordObj.format,
+                label: recordObj.label,
+                official: recordObj.official,
                 thumb_url: recordObj.thumb_url,
                 img_url: recordObj.img_url,
                 year_of_release: parseInt(recordObj.year_of_release)
@@ -314,42 +329,88 @@ export function addtoRecordsAndRecordStore(ownerObj, recordObj){
         })
         .then(r => r.json())
         .then(record => {
-           record["notes"] = recordObj.notes
-           record["resource_url"] = recordObj.resource_url
-           record["format"] = recordObj.formats
-           record["catno"] = recordObj.catno
-           record["label"] = recordObj.label
-           record["country"] = recordObj.country
-
-           dispatch(finishAddtoStore(ownerObj, record))
+            dispatch(finishAddtoStore(ownerObj, record))
        })
     }
 }
 
+/**Now record exists in backend, add to RecordStoreRecords,
+ * update Both Records and RecordStore with new record
+ */
 export function finishAddtoStore(ownerObj, record){
     return dispatch => {
         dispatch({type: ADD_TO_RECORDS, payload: record})
-        dispatch(addtoRecordStore(ownerObj, record))
+        dispatch({type: ADD_TO_RECORDSTORE, payload: record})
+        dispatch(addtoRecordstoreRecords(ownerObj, record))
     }
 }
 
-export function addtoRecordStore(ownerObj, recordObj){
+/**Record Already Exists in backend 
+ * so we will update it first
+*/
+export function updateBackendRecords(owner, recordObj){
     return function(dispatch, getState){
-        fetch(`${URL}/record_stores/1/recordstore_records`,{
+        fetch(`${URL}/records/${recordObj.id}`, {
+            method: "PATCH",
+            headers: {
+                "Accepts": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                id: parseInt(recordObj.id),
+                album_name: recordObj.album_name,
+                artist_name: recordObj.artist_name,
+                catno: recordObj.catno,
+                condition: recordObj.condition,
+                country: recordObj.country,
+                description: recordObj.description,
+                discogs_id: parseInt(recordObj.discogs_id),
+                format: recordObj.format,
+                label: recordObj.label,
+                official: recordObj.official,
+                thumb_url: recordObj.thumb_url,
+                img_url: recordObj.img_url,
+                year_of_release: parseInt(recordObj.year_of_release)
+            })
+        })
+        .then(r => r.json())
+        .then(record => {        
+            dispatch(finishUpdateAndAdd(owner, record))
+        })
+    }
+}
+
+/**Finish Send Request to add a new RecordstoreRecord,
+ * Update Frontend Records, Add to Front End RecordStore
+*/
+export function finishUpdateAndAdd(ownerObj, recordObj){
+    return dispatch => {
+        
+        dispatch({type: UPDATE_RECORD_DETAILS, payload: recordObj})
+        dispatch({type: ADD_TO_RECORDSTORE, payload: recordObj})
+        dispatch(addtoRecordstoreRecords(ownerObj, recordObj))
+    }
+}
+
+
+//Add to backend RecordstoreRecords
+export function addtoRecordstoreRecords(owner, record){
+    return function(dispatch, getState){
+        fetch(`${URL}/record_stores/${owner.record_store.id}/recordstore_records`, {
             method: "POST",
             headers: {
                 "Accepts": "application/json",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                record_store_id: ownerObj.record_store.id,
-                discogs_id: recordObj.discogs_id,
-                record_id: recordObj.id
+                record_store_id: parseInt(owner.record_store.id),
+                discogs_id: parseInt(record.discogs_id),
+                record_id: parseInt(record.id)
             })
         })
         .then(r => r.json())
-        .then(recordstoreRecordObj =>{
-            dispatch({type: ADD_TO_RECORDSTORE, payload: recordObj})
+        .then(recordstoreRecordObj => {
+            console.log(recordstoreRecordObj)
         })
     }
 }

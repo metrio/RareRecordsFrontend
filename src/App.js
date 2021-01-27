@@ -16,7 +16,8 @@ import RecordDetails from './Components/RecordDetails';
 import OwnerLogInForm from './Components/OwnerLogInForm';
 import OwnerProfile from './Containers/OwnerProfile';
 import OwnerDiscogsSearch from './Containers/OwnerDiscogsSearch';
-import RecordDetailForm from './Components/RecordDetailForm';
+import FormContainer from './Containers/FormContainer';
+
 
 class App extends React.Component {
   
@@ -120,9 +121,15 @@ class App extends React.Component {
             )
           }} />
 
+          <Route path='/record-store' render={(routerProps) => {
+            return(
+              <RecordStore routerProps={routerProps}/>
+            )
+          }} />
+
           <Route path='/recorddetails-form' render={(routerProps) => {
             return(
-              <RecordDetailForm routerProps={routerProps}/>
+              <FormContainer routerProps={routerProps}/>
             )
           }} />
 

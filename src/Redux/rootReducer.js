@@ -63,7 +63,18 @@ function recordReducer(prevState = defaultState.records, action){
         case "ADD_TO_RECORDS":
             return [...prevState, action.payload]
         case "UPDATE_RECORD_DETAILS":
-            return action.payload
+           let newArray = prevState.map((recordEl) => {
+                    if(recordEl.discogs_id === action.payload.discogs_id){
+                        return {
+                            ...recordEl,
+                            ...action.payload
+                        }
+                    } else {
+                        return recordEl
+                    }
+                })
+            console.log(newArray)
+            return prevState     
         default:
             return prevState
     }
@@ -73,6 +84,8 @@ function detailsReducer(prevState = defaultState.details, action){
     switch(action.type){
         case "RECORD_DETAILS":
             return action.payload
+        case "EXIT_DETAILS":
+            return []
         default:
             return prevState
     }

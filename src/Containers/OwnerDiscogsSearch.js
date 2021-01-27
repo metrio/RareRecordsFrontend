@@ -36,19 +36,20 @@ class OwnerDiscogsSearchContainer extends React.Component {
 
 
   moreDetails = (recordObj) => {
+    this.props.recordDetails(recordObj)
+    
     let location = this.props.routerProps.history
     const artist = recordObj.artist_name.replace(/\s+/g, '-')
     const album = recordObj.album_name.replace(/\s+/g, '-')
     
-    location.replace(`/records/${artist}/${album}`)
-    this.props.recordDetails(recordObj)
+    location.push(`/records/${artist}/${album}`)
   }
 
   addtoRecordStore = (recordObj) => {
-      let location = this.props.routerProps.history
-      
-      location.replace('/recorddetails-form')
       this.props.recordDetails(recordObj)
+      
+      let location = this.props.routerProps.history
+      location.push('/recorddetails-form')
   }
    
 

@@ -1,128 +1,96 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { connect } from 'react-redux'
-import { addtoRecordStore, addtoRecords,  recordDetails, addtoRecordsAndRecordStore} from '../Redux/actions'
+import { exitDetails } from '../Redux/actions'
 
-class RecordDetailForm extends React.Component {
 
-    state = {
-        album_name: "",
-        artist_name: "",
-        description: "",
-        discogs_id: null,
-        thumb_url: "",
-        img_url: "",
-        in_store: false,
-        condition: "",
-        year_of_release: "",
-        format: "",
-        catno: "",
-        label: "",
-        country: "",
-        official: false,
-        copies: null
-
+class RecordDetailForm extends React.Component{
+  
+  state = {
+      album_name:  "" ,
+      artist_name: "",
+      description: "",
+      discogs_id: "",
+      thumb_url: "",
+      img_url: "",
+      in_store: false,
+      condition: "",
+      year_of_release: "",
+      format: "",
+      catno: "",
+      label: "",
+      country: "",
+      official: false,
+      copies: ""
+      
     }
 
-    componentDidMount = () => {
-      const recordObj = this.props.details
+     static getDerivedStateFromProps = (props, state) => {
 
-      if(recordObj === undefined){
-          return null
-        } else {
-          this.setState({
-            album_name: recordObj.album_name,
-            artist_name: recordObj.artist_name,
-            discogs_id: recordObj.discogs_id,
-            thumb_url: recordObj.thumb_url,
-            img_url: recordObj.img_url,
-            year_of_release: recordObj.year_of_release
-          })
+      if (props.detailsObj.discogs_id !== state.discogs_id) {
+        return{
+          album_name: props.detailsObj.album_name,
+          artist_name: props.detailsObj.artist_name,
+          discogs_id: props.detailsObj.discogs_id,
+          thumb_url: props.detailsObj.thumb_url,
+          img_url: props.detailsObj.img_url,
+          year_of_release: parseInt(props.detailsObj.year_of_release)     
+        }
       }
     }
-        
 
+
+    setDetails = memo(()=> {
+      const recordObj = this.props.detailsObj
+      this.setState({
+        album_name: recordObj.album_name,
+        artist_name: recordObj.artist_name,
+        discogs_id: recordObj.discogs_id,
+        thumb_url: recordObj.thumb_url,
+        img_url: recordObj.img_url,
+        year_of_release: parseInt(recordObj.year_of_release)     
+      })
+    })
+  
     fromDiscogs = () => {
-      const recordObj = this.props.details
+      const recordObj = this.props.detailsObj
 
-      if(recordObj === undefined){
-         return null
+      if(recordObj.tracklist === undefined){
+       return null
       } else {
         return (
           <>
             <div className="tracklist">
               <h4>Tracklist</h4>
-                {this.tracklist(recordObj)}
+                {recordObj.tracklist.map(trackEl => <li key={trackEl.position}> {trackEl.title}</li>)}
             </div>
 
             <div className="basic-info">
               <h6>Catalog No.</h6>
-                  {this.catno(recordObj)}
+                  <li> { recordObj.catno } </li>
               <h6>Country</h6>
-                  {this.country(recordObj)}
+                  <li> { recordObj.country } </li>
               <h6>Year</h6>
-                  {this.year(recordObj)}
+                   <li> { recordObj.year } </li>
             </div>
 
             <div className="label">
               <h6>Labels</h6>
-                {this.label(recordObj)}
+                  { recordObj.label.map(ele => <li> { ele }</li>) }
             </div>
 
             <div className="format-info">
               <h6>Format</h6>
-                {this.format(recordObj)}
+              <>
+                <li>Media Format: {recordObj.format[0].name}</li>
+                <li>Disc Color: {recordObj.format[0].text}</li>
+                {recordObj.format[0].descriptions.map(ele => <li> { ele }</li>)}
+              </>
             </div>
           </>
+          
         )
       }
     }
-
-    tracklist = (recordObj) => {
-      return recordObj.tracklist.map(trackEl => <li key={trackEl.position}> {trackEl.title}</li>)
-    }
-
-    format = (recordObj) => {
-      const format = recordObj.format
-
-      if(typeof format === "object"){
-        console.log("In format", format[0].name , format[0].descriptions, format[0].text)
-        return (
-          <>
-          <li>Media Format: {format[0].name}</li>
-          <li>Disc Color: {format[0].text}</li>
-          {format[0].descriptions.map(ele => <li> { ele }</li>)}
-          </>
-        )
-      }
-    }
-
-    catno = (recordObj) => {
-        const catno = recordObj.catno
-        return <li> { catno } </li>
-    }
-    
-    label = (recordObj) => {
-      const label = recordObj.label
-      console.log("In label", label)
-
-      return label.map(ele => <li> { ele }</li>)
-    }
-
-
-    country = (recordObj) => {
-      const country = recordObj.country
-      console.log("In country", country)
-
-      return <li> { country } </li>
-    }
-
-    year = (recordObj) => {
-      const year = recordObj.year_of_release
-      console.log("In year", year)
-
-      return <li> { year } </li>
-    }
-
 
     changeHandler = (e) => {
       this.setState({ [e.target.name]: e.target.value})
@@ -132,43 +100,29 @@ class RecordDetailForm extends React.Component {
       this.setState({[e.target.name]: e.target.checked})
     }
 
-    submitAlbum = (details) => {
-        const recordList = this.props.records
-        const foundRecordArray = recordList.filter(recordEl => recordEl.discogs_id === details.discogs_id)
-        const owner = this.props.owner
-       
-        if(foundRecordArray.length > 0){
-    
-          foundRecordArray[0]["notes"] = details.notes
-          foundRecordArray[0]["resource_url"] = details.resource_url
-          foundRecordArray[0]["format"] = details.formats
-          foundRecordArray[0]["catno"] = details.catno
-          foundRecordArray[0]["label"] = details.label
-          foundRecordArray[0]["country"] = details.country
-    
-          const foundRecord = foundRecordArray[0]
-           
-          this.props.addtoRecordStore(owner, foundRecord)
-        } else {
-           this.props.addtoRecordsAndRecordStore(owner, details)
-        }
-      }  
+    submitRecordHandler = (e) => {
+      e.preventDefault()
+      let location = this.props.routerProps.history
+      const record = this.state
+      
+      location.replace(`/record-store`)
+      this.submitAlbum(record)
+    }
 
-      submitRecordHandler = (e) => {
-        e.preventDefault()
-
-        {console.log(this.state)}
-      }
+    componentWillUnmount = () => {
+      this.props.exitDetails()
+    }
 
 
     render() {
+      const details = this.props.detailsObj
         return (
           <>
-        
+        {console.log("State ", this.state, "Details ", details)}
             <div className="discogs-details">
               <h4>From Discogs </h4>
 
-              <img src={this.props.details.img_url} alt={this.props.details.album_name} />
+              {details === undefined ? null : <img src={details.img_url} alt={details.album_name}/>}
 
              {this.fromDiscogs()}
 
@@ -240,19 +194,11 @@ class RecordDetailForm extends React.Component {
     }
 }
 
-function msp(state) {
-  return {
-    owner: state.owner,
-    records: state.records,
-    details: state.details
-  }
-}
 
 function mdp(dispatch){
   return{
-
+    exitDetails: () => dispatch(exitDetails())
   }
 }
 
-
-export default connect(msp, mdp)(RecordDetailForm)
+export default connect(null, mdp)(RecordDetailForm)
