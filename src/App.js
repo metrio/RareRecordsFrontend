@@ -37,8 +37,6 @@ class App extends React.Component {
         .then(r => r.json())
         .then(returningUser => {
           this.props.returning(returningUser.user)
-          this.props.setRecords()
-          this.props.setRecordStore()
         })
     } else if(token && owner) {
       fetch(`${URL}/owner-profile`, {
@@ -50,11 +48,11 @@ class App extends React.Component {
         .then(r => r.json())
         .then(ownerReturning => {
           this.props.ownerReturning(ownerReturning.owner)
-          this.props.setRecords()
-          this.props.setRecordStore()
         })
     }
 
+    this.props.setRecordStore()
+    this.props.setRecords()
   }
 
 
@@ -75,7 +73,6 @@ class App extends React.Component {
   }
   
   render () {
-
 
     return (
   

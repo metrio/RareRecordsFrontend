@@ -1,8 +1,7 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
 import WishlistCard from '../Components/WishlistCards';
-import { recordDetails, removeFromWishlist, editWishlistObj } from '../Redux/actions'
+import { recordDetails, removeFromWishlist } from '../Redux/actions'
 
 
 class Wishlist extends React.Component {

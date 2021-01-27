@@ -1,7 +1,7 @@
 import React from 'react'
 import RecordDetailForm from '../Components/RecordDetailForm'
-import { connect} from 'react-redux'
-import { addtoRecordsAndRecordStore, updateBackendRecords, exitDetails } from '../Redux/actions'
+import { connect } from 'react-redux'
+import { addtoRecordsAndRecordStore, updateBackendRecords } from '../Redux/actions'
 
 class FormContainer extends React.Component{
 

@@ -1,7 +1,5 @@
 import React from 'react';
 import SearchForm from '../Components/SearchForm';
-import RecordCard from '../Components/RecordCard';
-import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { recordDetails } from '../Redux/actions'
 import OwnerRecordCard from '../Components/OwnerRecordCard';

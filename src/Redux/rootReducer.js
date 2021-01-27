@@ -73,8 +73,7 @@ function recordReducer(prevState = defaultState.records, action){
                         return recordEl
                     }
                 })
-            console.log(newArray)
-            return prevState     
+            return newArray  
         default:
             return prevState
     }

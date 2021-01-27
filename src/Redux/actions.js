@@ -293,7 +293,6 @@ export function setRecordStore(){
         })
         .then(r => r.json())
         .then(recordStoreObj => {
-            console.log(recordStoreObj)
             dispatch({type: SET_RECORDSTORE, payload: recordStoreObj.records})
         })
     }

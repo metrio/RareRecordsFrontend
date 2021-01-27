@@ -4,9 +4,10 @@ class RecordStoreCard extends React.Component{
 
     render () {
         return(
-            <div>
-                <h4>{this.props.recordEl.album_name}</h4>
-                <h4>{this.props.recordEl.artist_name}</h4>
+            <div className="recordstore-card">
+                <img src={this.props.recordEl.img_url} alt={`${this.props.recordEl.album_name} - ${this.props.recordEl.album_name}`}/>
+                <h4>{this.props.recordEl.album_name} - {this.props.recordEl.album_name}</h4>
+                
                 <h4>{this.props.recordEl.description}</h4>
                 <h4>{this.props.recordEl.condition}</h4>
                 <h4>{this.props.recordEl.year_of_release}</h4>
