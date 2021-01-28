@@ -13,12 +13,13 @@ class RecordStore extends React.Component {
       
     
         return (
-          <div className="record-store">
-              <h1>Rare Records Store</h1>
-              
-              {console.log(this.props.recordstore)}
-              {this.displayRecords()}
-          </div>
+          <body className="record-store">
+              <div className="recordstore-wrapper">
+                <h1>Rare Records Store</h1>
+                {console.log(this.props.recordstore)}
+                {this.displayRecords()}
+              </div>
+          </body>
             
         )
       } 

@@ -15,7 +15,7 @@ class OwnerLogInForm extends React.Component {
         e.preventDefault()
         
         let location = this.props.routerProps.history
-        location.replace("/owner-profile")
+        location.replace("/home")
         this.props.submitHandler(this.state)
 
     }

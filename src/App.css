@@ -677,3 +677,42 @@
   }
 
 /*********  Forms Should Be done    **************/
+
+
+/*************** Record Store **************/
+
+.record-store {
+  display: gird;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: masonry;
+}
+
+.recordstore-card {
+  background-color: #444;
+  color: #fff;
+  display: flex;
+  justify-content:space-around;
+  border-radius: 5px;
+  padding: 20px;
+  width: 50vw;
+  height: auto;
+  overflow: hidden;
+}
+
+.recordstore-card img {
+  width: auto;
+  height: 90px;
+}
+
+
+.recordstore-card:nth-child(even) {
+  background-color: #ccc;
+  color: #000;
+}
+
+	.recordstore-wrapper {
+    width: 90%;
+    max-width: 940px;
+    margin: 20px auto;
+    background-color: #fff;
+	}
