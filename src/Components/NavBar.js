@@ -19,7 +19,7 @@ const NavBar = (props) => {
 
                 <div className="button-div">
                 
-                <NavLink to="/store" style={{ color: 'inherit', textDecoration: 'inherit'}}> 
+                <NavLink to="/record-store" style={{ color: 'inherit', textDecoration: 'inherit'}}> 
                     <button>Rare Records Store</button> 
                 </NavLink>
                 

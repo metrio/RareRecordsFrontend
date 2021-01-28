@@ -42,7 +42,8 @@ class RecordDetails extends React.Component {
       }
   
       tracklist = (recordObj) => {
-        return recordObj.tracklist.map(trackEl => <li key={trackEl.position}> {trackEl.title}</li>)
+          console.log(recordObj.tracklist)
+        return recordObj.tracklist.map(trackEl =><li key={trackEl.position}> <div key={trackEl.title} className="left" > {trackEl.title} </div>  <div className="right">  {trackEl.duration}</div> </li> )
       }
   
       format = (recordObj) => {
@@ -67,7 +68,7 @@ class RecordDetails extends React.Component {
       
       label = (recordObj) => {
         const label = recordObj.label
-        console.log("In label", label)
+       
   
         return label.map(ele => <li> { ele }</li>)
       }
@@ -75,7 +76,6 @@ class RecordDetails extends React.Component {
   
       country = (recordObj) => {
         const country = recordObj.country
-        console.log("In country", country)
   
         return <li> { country } </li>
       }
@@ -94,6 +94,30 @@ class RecordDetails extends React.Component {
         location.replace('/recorddetails-form')
     }
 
+    addtoWishlist = (e) => {
+        e.preventDefault()
+
+        const details = this.props.details
+        const recordList = this.props.records
+        const foundRecordArray = recordList.filter(recordEl => recordEl.discogs_id === details.discogs_id)
+        const user = this.props.user
+       
+        if(foundRecordArray.length > 0){
+    
+          foundRecordArray[0]["notes"] = details.notes
+          foundRecordArray[0]["resource_url"] = details.resource_url
+          foundRecordArray[0]["format"] = details.formats
+          foundRecordArray[0]["catno"] = details.catno
+          foundRecordArray[0]["label"] = details.label
+          foundRecordArray[0]["country"] = details.country
+    
+          const foundRecord = foundRecordArray[0]
+           
+          this.props.addtoWishlist(user.id, foundRecord)
+        } else {
+           this.props.newRecordWishlist(user.id, details)
+        }
+      }  
 
 
 
@@ -102,43 +126,70 @@ class RecordDetails extends React.Component {
         
         console.log(details)
         return (
-            <>
-            { details.length === 0
+            <body className="record-details">
+
+            { details.tracklist === undefined
 
              ?
                 <h1>Loading</h1>
              : 
                 
                 this.props.owner ? 
-                    <span>
+
+                    <span className="details">
+                        <div className="first-details">
                         <img src={details.thumb_url} alt={details.title} />
-                        <h3>{details.album_name} - {details.artist_name}</h3>
-                        <h3>{console.log(this.props.details)}</h3>
+                        <h3 className="title" >{details.album_name} - {details.artist_name}</h3>
+                        </div>
                         
                         <button onClick={this.addtoRecordStore}>Add to RecordShop</button>
 
                         <div className="discog-details">
                             {this.fromDiscogs()}
                         </div>
+
                     </span>
                     
                 :
+                <>
+                        {
+                            this.props.user ?
+                            
+                    <>
+                    <span className="details">
+                        <div className="first-details">
+                            <img src={details.thumb_url} alt={details.title} />
+                            <h3 className="title">{details.album_name} - {details.artist_name} </h3>
+                        </div>
+                    
 
-                    <span>
-                        <img src={details.thumb_url} alt={details.title} />
-                        <h3>{details.album_name} - {details.artist_name}</h3>
-                        
-                        <h3>{console.log(this.props.details)}</h3>
+                        <div className="discog-details">
+                            {this.fromDiscogs()}
+                        </div>
+
+                        <button onClick={this.addtoWishlist}>Add to Wishlist</button>
+                    </span>
+                    </>
+
+                    :
+                     <>       
+                    <span className="details">
+                        <div className="first-details">
+                            <img src={details.thumb_url} alt={details.title} />
+                            <h3 className="title">{details.album_name} - {details.artist_name} </h3>
+                        </div>
+                    
 
                         <div className="discog-details">
                             {this.fromDiscogs()}
                         </div>
                     </span>
-             
-                
+                    </>
+                        }
+                </>
             }
             
-            </>
+            </body>
 
         )
     }

@@ -95,10 +95,6 @@ class App extends React.Component {
               <OwnerDiscogsSearch routerProps={routerProps} /> )
           }} />
 
-          <Route path="/store" render={(routerProps) => {
-            return (
-              <RecordStore routerProps={routerProps} />)
-          }} />
 
           <Route path="/login" render={(routerProps) => {
             return(
@@ -115,11 +111,14 @@ class App extends React.Component {
               <EditForm submitHandler={this.editSubmitHandler} routerProps={routerProps} />
             )
           }} />
+
           <Route path='/records/:artist/:record_name/' render={(routerProps) => {
             return(
               <RecordDetails routerProps={routerProps}/>
             )
           }} />
+
+          
 
           <Route path='/record-store' render={(routerProps) => {
             return(
