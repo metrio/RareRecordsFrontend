@@ -19,7 +19,6 @@ class RecordDiscogsSearchContainer extends React.Component {
     const token = process.env.REACT_APP_DISCOGS_API_KEY
     const artist = searchObj.artist_name
     const record = searchObj.record_name
-    console.log(this)
     
     const url = `https://api.discogs.com/database/search?artist=${artist}&release_title=${record}&format=vinyl&token=${token}`
 

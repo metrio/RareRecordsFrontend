@@ -1,3 +1,4 @@
+/* NavBar CSS*/
 
 .nav-bar {
     background-color: black;
@@ -75,6 +76,8 @@
     font-style: normal;
   }
 
+  /* Profile CSS*/
+
   .profile {
     display: flex;
     justify-content: space-around;
@@ -84,6 +87,7 @@
     justify-content: flex-end;
   }
 
+  /* Record Preview*/
   .record-preview {
     border-color: black;
     border-style: solid;
@@ -110,3 +114,566 @@
     float: right;
     justify-content: flex-end;
   }
+
+  /* Homepage CSS */
+
+  .homepage {
+    height: 90vh;
+    width: 200vh;
+    overflow: hidden;
+  }
+
+  .records-array{
+    height: 90vh;
+    width: 300vh;
+    background-color: rgba(255, 255, 255, 0.60);
+    position: absolute;
+    overflow: hidden;
+   }
+
+   .homepage-text{
+      color: white;
+      height: 90vh;
+      width: 500vh;
+      background-color: rgba(0, 0, 0, 0.20);
+      position: absolute;
+      overflow: hidden;
+      z-index: 1000;
+  }
+
+  .homepage-text .img {
+    height: 25%;
+    width: auto;
+    position: absolute;
+    right: 20%;
+  }
+
+   .img1{
+     height: auto;
+     position: relative;
+     width: 75px;
+     animation: infinite;
+     transform: rotate3d(1, 1, 1, 20deg);
+     animation-name: falling1;
+     animation-duration: 30s;
+     animation-timing-function: linear;
+
+   }
+
+   .img2{
+    height: auto;
+    position: relative;
+    width: 100px;
+    animation: infinite;
+    animation-name: falling2;
+    animation-duration: 15s;
+    animation-timing-function: linear;
+    transform: rotate3d(1, 1, 1, 20deg);
+
+  }
+
+  .img3{
+    height: auto;
+    position: relative;
+    width: 1;
+    animation: infinite;
+    animation-name: falling3;
+    animation-duration: 10s;
+    animation-timing-function: linear;
+    transform: rotate3d(1, 1, 1, 20deg);
+  }
+
+  .img4{
+    height: auto;
+    position: relative;
+    width: 1;
+    animation: infinite;
+    animation-name: falling4;
+    animation-duration: 20s;
+    animation-timing-function: linear;
+    transform: rotate3d(1, 1, 1, 20deg);
+  }
+
+  .img5{
+    height: auto;
+    position: relative;
+    width: 1;
+    animation: infinite;
+    animation-name: falling5;
+    animation-duration: 30s;
+    animation-timing-function: linear;
+    transform: rotate3d(1, 1, 1, 20deg);
+  }
+
+  .img6{
+    height: auto;
+    position: relative;
+    width: 1;
+    animation: infinite;
+    animation-name: falling6;
+    animation-duration: 40s;
+    animation-timing-function: linear;
+    transform: rotate3d(1, 1, 1, 20deg);
+    
+  }
+
+  .img7{
+    height: auto;
+    position: relative;
+    width: 1;
+    animation: infinite;
+    animation-name: falling7;
+    animation-duration: 18s;
+    animation-timing-function: linear;
+    transform: rotate3d(1, 1, 1, 20deg);
+  }
+
+
+   @keyframes falling1{
+    0% {
+      right: 0;
+      top: -440px;
+    }
+    100% {
+      right: 360px;
+      top: 550px;
+    }
+  }
+
+  @keyframes falling2{
+    0% {
+      right: 0;
+      top: -280px;
+    }
+   
+    100% {
+      right: 382px;
+      top: 700px;
+    }
+  }
+  
+  @keyframes falling3{
+    0% {
+      right: 0;
+      top: -500px;
+    }
+   
+    100% {
+      right: 436px;
+      top: 700px;
+    }
+  }
+
+  @keyframes falling4{
+    0% {
+      right: 0;
+      top: -240px;
+    }
+   
+    100% {
+      right: 270px;
+      top: 500px;
+    }
+  }
+
+  @keyframes falling5{
+    0% {
+      right: 0;
+      top: -390px;
+    }
+   
+    100% {
+      right: 360px;
+      top: 600px;
+    }
+  }
+
+  @keyframes falling6{
+    0% {
+      right: 0;
+      top: -395px;
+    }
+   
+    100% {
+      right: 425px;
+      top: 500px;
+    }
+  }
+
+  @keyframes falling7{
+    0% {
+      right: 0;
+      top: -440px;
+    }
+   
+    100% {
+      right: 451px;
+      top: 800px;
+    }
+  }
+
+  /* RecordCard, RecordStore, Owner side Records CSS*/
+
+  .record-store{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .recordcard-div {
+    align-content: center;
+    margin: 50px 20px 20px 20px;
+    display: inline;
+    position: relative;
+    height: auto;
+    width: 400px;
+    overflow: hidden;
+  }
+
+  .recordcard-text {
+    align-items: center;
+    align-self: center;
+    display: inline-block;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 30px;
+    position: absolute;
+  }
+
+
+  .recordcard-div img{
+    display: inline-block;
+    align-self: center;
+    margin-right: 90px;
+    width: 150px;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    width: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.80);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.55s;
+  }
+  
+  .overlay > * {
+    transform: translateY(20px);
+    transition: transform 0.55s;
+  }
+  
+  .overlay:hover {
+    opacity: 1;
+  }
+
+  .overlay > * {
+    transform: translateY(0);
+  }
+
+/* Search page*/
+.Search-Container{
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  padding: unset;
+  object-position: top;
+  object-fit: cover;
+}
+
+.search-div{
+  align-content: center;
+  flex-direction: column;
+  height: 50vh;
+}
+
+.search-page h1 {
+  border-bottom:  1px solid black;
+  box-sizing: border-box;
+}
+
+
+
+
+
+/******************    Forms       *********************/
+
+
+.form-body{
+  height: 60vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+/**  Login Section */
+.login-form{
+  height: 40vh;
+  width: 30vw;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+
+.username-div{
+  width: 50%;
+  height: 50px;
+  position: relative;
+}
+
+.username-div input {
+  width: 100%;
+  height: 100%;
+  color: #595f6e;
+  border: none;
+  outline: none;
+  overflow: hidden;
+}
+
+.username-div label{
+  position: absolute;
+  bottom: 0px;
+  left: 0%;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+  border-bottom:  1px solid black;
+}
+
+.username-div label::after{
+  content: "";
+  position: absolute;
+  left: 0px;
+  bottom: -1px;
+  height: 100%;
+  width: 100%;
+  border-bottom: 3px solid rgb(230, 160, 68);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  
+}
+
+.content-username{
+  position: absolute;
+  bottom: 5px;
+  left: 0px;
+  transition: all 0.3s ease;
+}
+
+  .username-div input:focus + .label-username .content-username,
+  .form input:valid + .label-username .content-username {
+    transform: translateY(-150%);
+    font-size: 14px;
+    color: rgb(230, 160, 68);
+  }
+
+  .username-div input:focus + .label-username::after, 
+  .username-div input:valid + .label-username::after{
+    transform: translate(0%)
+  }
+
+  .password-div{
+    width: 50%;
+    height: 50px;
+    position: relative;
+  }
+  
+  .password-div input {
+    width: 100%;
+    height: 100%;
+    color: #595f6e;
+    border: none;
+    outline: none;
+    overflow: hidden;
+  }
+  
+  .password-div label{
+    position: absolute;
+    bottom: 0px;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    border-bottom:  1px solid black;
+  }
+  
+  .password-div label::after{
+    content: "";
+    position: absolute;
+    left: 0px;
+    bottom: -1px;
+    height: 100%;
+    width: 100%;
+    border-bottom: 3px solid rgb(230, 160, 68);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    
+  }
+
+  .content-password{
+    position: absolute;
+    bottom: 5px;
+    left: 0px;
+    transition: all 0.3s ease;
+  }
+
+  .password-div input:focus + .label-password .content-password,
+  .form input:valid + .label-password .content-password {
+    transform: translateY(-150%);
+    font-size: 14px;
+    color: rgb(230, 160, 68);
+  }
+
+  .password-div input:focus + .label-password::after, 
+  .password-div input:valid + .label-password::after{
+    transform: translate(0%)
+  }
+
+/* For Edit From*/
+
+  .edit-form{
+    height: 40vh;
+    width: 30vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .phone-div{
+    width: 50%;
+    height: 50px;
+    position: relative;
+  }
+  
+  .phone-div input {
+    width: 100%;
+    height: 100%;
+    color: #595f6e;
+    border: none;
+    outline: none;
+    overflow: hidden;
+  }
+  
+  .phone-div label{
+    position: absolute;
+    bottom: 0px;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    border-bottom:  1px solid black;
+  }
+  
+  .phone-div label::after{
+    content: "";
+    position: absolute;
+    left: 0px;
+    bottom: -1px;
+    height: 100%;
+    width: 100%;
+    border-bottom: 3px solid rgb(230, 160, 68);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    
+  }
+
+  .content-phone{
+    position: absolute;
+    bottom: 5px;
+    left: 0px;
+    transition: all 0.3s ease;
+  }
+
+  .phone-div input:focus + .label-phone .content-phone,
+  .form input:valid + .label-phone .content-phone {
+    transform: translateY(-150%);
+    font-size: 14px;
+    color: rgb(230, 160, 68);
+  }
+
+  .phone-div input:focus + .label-phone::after, 
+  .phone-div input:valid + .label-phone::after{
+    transform: translate(0%)
+  }
+
+  .email-div{
+    width: 50%;
+    height: 50px;
+    position: relative;
+  }
+  
+  .email-div input {
+    width: 100%;
+    height: 100%;
+    color: #595f6e;
+    border: none;
+    outline: none;
+    overflow: hidden;
+  }
+  
+  .email-div label{
+    position: absolute;
+    bottom: 0px;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    pointer-events: none;
+    border-bottom:  1px solid black;
+  }
+  
+  .email-div label::after{
+    content: "";
+    position: absolute;
+    left: 0px;
+    bottom: -1px;
+    height: 100%;
+    width: 100%;
+    border-bottom: 3px solid rgb(230, 160, 68);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    
+  }
+
+  .content-email{
+    position: absolute;
+    bottom: 5px;
+    left: 0px;
+    transition: all 0.3s ease;
+  }
+
+  .email-div input:focus + .label-email .content-email,
+  .form input:valid + .label-email .content-email {
+    transform: translateY(-150%);
+    font-size: 14px;
+    color: rgb(230, 160, 68);
+  }
+
+  .email-div input:focus + .label-email::after, 
+  .email-div input:valid + .label-email::after{
+    transform: translate(0%)
+  }
+
+  /* For SignUp*/
+
+  .signup-form{
+    height: 40vh;
+    width: 30vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+  }
+
+/*********  Forms Should Be done    **************/

@@ -22,12 +22,38 @@ class EditForm extends React.Component {
 
     render(){
         return(
-            <form onSubmit={this.submitHandler} className="form" >
-                <input type="text" name="username" placeholder="username" value={this.state.username} onChange={this.changeHandler} />
-                <input type="text" name="phone" placeholder="phone number" value={this.state.phone} onChange={this.changeHandler} />
-                <input type="email" name="email" placeholder="email" value={this.state.email} onChange={this.changeHandler} />
-                <button>Edit User</button>
-            </form>
+            <body className="form-body">
+
+                <form onSubmit={this.submitHandler} className="edit-form" >
+
+                    <div className="username-div">
+                        <input type="text" name="username" value={this.state.username} onChange={this.changeHandler} autoComplete="off"/>
+                        <label for="username" className="label-username">
+                            <span className="content-username">Username</span>
+                        </label>
+                    </div>
+                        
+                    <div className="phone-div">
+                        <input type="phone" name="phone" value={this.state.phone} onChange={this.changeHandler} autoComplete="off" />
+                        <label for="phone" className="label-phone">
+                            <span className="content-phone">Phone</span>
+                        </label>
+
+                    </div>
+
+                    <div className="email-div">
+                        <input type="text" name="email" value={this.state.email} onChange={this.changeHandler} autoComplete="off"/>
+                        <label for="email" className="label-email">
+                            <span className="content-email">email</span>
+                        </label>
+                    </div>
+                        
+
+                
+                
+                    <button>Edit User</button>
+                </form>
+            </body>
         )
     }
 }

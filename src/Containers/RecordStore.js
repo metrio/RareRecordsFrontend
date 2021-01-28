@@ -13,7 +13,7 @@ class RecordStore extends React.Component {
       
     
         return (
-          <div>
+          <div className="record-store">
               <h1>Rare Records Store</h1>
               
               {console.log(this.props.recordstore)}

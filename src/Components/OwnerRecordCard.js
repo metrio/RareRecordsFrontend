@@ -61,6 +61,9 @@ class OwnerRecordCard extends React.Component {
         return(
             <div className="recordcard-div">
                 <img src={record.img_url} alt={record.album_name} style={{width:'auto', height:'125px'}}/>
+
+                <div className="recordcard-text">
+
                 <h6>Year of Release: {record.year_of_release}</h6>
                 <h6>Format: 
                     {record.format === undefined ? null 
@@ -72,8 +75,11 @@ class OwnerRecordCard extends React.Component {
                             
                     }
                 </h6>
-                <button onClick={this.addtoRecordStore}>Add to Store</button>
-                <button onClick={this.moreDetails}>More Details</button>
+                </div>
+                <div className="overlay">
+                    <button onClick={this.addtoRecordStore}>Add to Store</button>
+                    <button onClick={this.moreDetails}>More Details</button>
+                </div>
             </div>
         )
     }

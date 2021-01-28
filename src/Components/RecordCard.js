@@ -10,7 +10,7 @@ class RecordCard extends React.Component {
 
     wishlistHandler = (e) => {
         e.preventDefault()
-
+        
         const prevState = this.state.wishlist
         this.setState({wishlist: !prevState})
     }
@@ -56,7 +56,7 @@ class RecordCard extends React.Component {
         e.preventDefault()
         const wishlistObj = this.recordDetail()
 
-        this.wishlistHandler()
+        this.wishlistHandler(e)
         this.props.submitHandler(wishlistObj)
     }
 
@@ -66,31 +66,43 @@ class RecordCard extends React.Component {
         const record = this.recordDetail()
 
         return(
-            <div className="recordCard-div">
-                <img src={record.img_url} alt={record.album_name} style={{width:'auto', height:'125px'}}/>
-                <h5>Year of Release: {record.year_of_release}</h5>
-                <h6>Format: 
-                    {record.format === undefined ? null 
+            <div className="recordcard-div">
+                <img src={record.img_url} alt={record.album_name} />
+
+                    <div className="recordcard-text">
+                        <h5>{record.album_name}</h5>
+                        <h6>Year of Release: {record.year_of_release}</h6>
+                        <h6>Format: 
+                            {record.format === undefined ? null 
                     
-                    :
-                    <>
-                    {record.format[0].descriptions.map(ele => <li>{ ele }</li>)}
-                    </>
+                            :
+                            <>
+                            {record.format[0].descriptions.map(ele => <li>{ ele }</li>)}
+                            </>
                             
-                    }
-                </h6>
-                <button onClick={this.wishlistHandler}>Want to add to Wishlist?</button>
-                {this.state.wishlist 
-                ? 
-                <form onSubmit={this.submitHandler}>
-                    <label>What condition would you like the record?</label>
-                    <input type="text" name="condition" placeholder= "ie Mint, Fair, Near Mint" value={this.state.condition} onChange={this.changeHandler}/>
-                    <button>Add to Wishlist</button>
-                </form>
+                            }
+                        </h6>
+                    </div>
+
+                    <div className="overlay">
+
+                        {this.state.wishlist 
+                        ? 
+                        <div className="recordcard-form">
+                            <form onSubmit={this.submitHandler}>
+                                <label>What condition would you like the record?</label>
+                                <input type="text" name="condition" placeholder= "ie Mint, Fair, Near Mint" value={this.state.condition} onChange={this.changeHandler}/>
+                                <button>Add to Wishlist</button>
+                            </form>
+                        </div>
                 
-                : null}
-                <button onClick={this.moreDetails}>More Details!</button>
-            </div>
+                        : null}
+                        <button onClick={this.moreDetails}>More Details!</button>
+                        <button onClick={this.wishlistHandler}>Want to add to Wishlist?</button>
+                    </div>
+
+                </div>
+          
         )
     }
 }

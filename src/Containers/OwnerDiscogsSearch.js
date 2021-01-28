@@ -63,7 +63,7 @@ class OwnerDiscogsSearchContainer extends React.Component {
         </div>
 
         <div className="Search-Container">
-          <h2>Number of Results: {this.state.results}</h2>
+          <h2 classname="search-div">Number of Results: {this.state.results}</h2>
           <SearchForm  submitHandler={this.discogsRecordSearch}/>
         </div>
       </span>  
