@@ -103,8 +103,9 @@ class RecordDetailForm extends React.Component{
     render() {
       const details = this.props.detailsObj
         return (
-          <>
-        {console.log("State ", this.state, "Details ", details)}
+          <body className="recorddetail-page">
+
+            
             <div className="discogs-details">
               <h4>From Discogs </h4>
 
@@ -176,7 +177,8 @@ class RecordDetailForm extends React.Component{
                <button>Submit Record</button>
 
             </form>
-           </> 
+
+           </body> 
         )
     }
 }

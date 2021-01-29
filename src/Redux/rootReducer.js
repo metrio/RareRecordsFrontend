@@ -94,10 +94,20 @@ function recordstoreReducer(prevState = defaultState.recordstore, action){
     switch(action.type){
         case "SET_RECORDSTORE":
             return action.payload
-        case "ADD_TO_RECORDSHOP":
+        case "ADD_TO_RECORDSTORE":
             return [...prevState, action.payload]
-        case "UPDATE_RECORDSHOP":
-            return action.payload
+        case "UPDATE_RECORDSTORE":
+            let newArray = prevState.map((recordEl) => {
+                if(recordEl.discogs_id === action.payload.discogs_id){
+                    return {
+                        ...recordEl,
+                        ...action.payload
+                    }
+                } else {
+                    return recordEl
+                }
+            })
+        return newArray  
         default:
             return prevState
     }

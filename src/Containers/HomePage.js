@@ -71,8 +71,19 @@ render () {
             }
             <div className="homepage-text">
                 <h1> Welcome to RareRecords</h1>
-                <p>Where we connect small RecordShop Owners with Patrons searching for their White Whales of Records</p>
+
+                <h3><span>Where we connect small RecordShop Owners</span> 
+                </h3>
+
+                <h3>
+                    <span>With Patrons searching </span>
+                </h3>
+                
+                <h3>
+                    <span>For their White Whales of Records </span>
+                </h3>
             </div>
+
         </span>
         )
     }
