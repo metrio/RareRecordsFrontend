@@ -2,6 +2,10 @@ import { ADD_TO_WISHLIST , REMOVE_FROM_WISHLIST, ADD_TO_RECORDS, UPDATE_RECORD_D
 import {URL} from '../index'
 
 
+// typically these action files are broken up by the service they relate to
+// so you'd have like an auth actions file, a records actions file, etc. 
+// will definitely save you space on that import list lol
+
 export function loginUser(userObj) {
   return function(dispatch, getState){
       fetch(`${URL}/login`, {
@@ -186,6 +190,12 @@ export function setWishlist(wishlistRecords) {
 export function setRecords() {
     return function (dispatch, getState){
         fetch(`${URL}/records`,{
+            // so developers love to see reusable code whenever possible
+            // what you could do instead of writing these fetch statements every time is write a function whcih you store elsewhere callled like getRequest or somethibn 
+            // or even better apiRequest and have it accept arguments for pathname (in this case `/records`) and method (in this case 'GET')
+            // the headers are usually never going to change so you could just leave them in that file
+            // and just have it return either the parsed JSON or error message
+            // if you get axios it will handle a lot of this config for you
             method: "GET",
             headers: {
                 "Accepts": "application/json",

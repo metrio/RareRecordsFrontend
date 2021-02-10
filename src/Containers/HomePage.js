@@ -7,13 +7,17 @@ import diver from '../assets/diver-silhouette.png'
 
 class HomePage extends React.Component  {
    
+    // very cool
+    // you can definitely do this without javascript, but we can talk about that another time
+    // just gonna post this thing about https://thoughtbot.com/blog/css-animation-for-beginners
+    // what you can do is just map through an array of albums and set the delay on the animation based on their order, (likely) no js necessary
 
      componentDidMount = () => {
         const randomImgPlaceFn = this.randomImgPlace
         let intervalId
+        // also you have to make sure you clear your intervals!!!! otherwise they will not stop 
         intervalId = setInterval(randomImgPlaceFn, 6000)
     }
-
 
     randomImgPlace = () => {
         const pics = this.props.records.map(record => record.thumb_url)
@@ -57,7 +61,10 @@ class HomePage extends React.Component  {
 
 
 render () {
+    // see note about let v const
     let records = this.props.records
+    // what I would do:
+    // const {records} = this.props
    
 
     return (

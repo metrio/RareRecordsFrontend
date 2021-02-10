@@ -21,6 +21,7 @@ import FormContainer from './Containers/FormContainer';
 
 class App extends React.Component {
   
+  // Highly highly highly recommend reading the entire React documentation. As far as documentation goes, it's pretty straight forward
   componentDidMount = () => {
     
     const token = localStorage.getItem("token")
@@ -28,6 +29,22 @@ class App extends React.Component {
     const owner = localStorage.getItem("owner")
 
     if(token && user){
+      // fetch api is fine, but I recommend checking out axios for api requests https://github.com/axios/axios
+
+      // also, your asynchronous requests (https://www.youtube.com/watch?v=Kpn2ajSa92c) should be in try catch blocks and denoted with an async keyword ex:
+      // const myAsyncFunc = async () => {
+          // try {
+            //   do something heree, usually an api request
+            //   the await keyword literally tells the code to wait until this async request works and saves the results to a variable
+            //   const s = await fetch(url, {blah})
+            //   do something with s
+          // }
+          // catch (error) {
+              //  do something
+          // }
+      // }
+
+      // I would also create a separate folder just for API requests and then import them as needed
       fetch(`${URL}/profile`, {
         method: "GET",
         headers: {

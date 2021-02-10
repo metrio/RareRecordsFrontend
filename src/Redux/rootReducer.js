@@ -63,6 +63,28 @@ function recordReducer(prevState = defaultState.records, action){
         case "ADD_TO_RECORDS":
             return [...prevState, action.payload]
         case "UPDATE_RECORD_DETAILS":
+            // https://medium.com/javascript-scene/javascript-es6-var-let-or-const-ba58b8dcde75
+            // tl;dr let is for reassigning values, const is for permenant values 
+            // more often than not you don't need to use let unless you need to have access to a variable and/or set a variable out of scope
+            // ex: (this is highly dumb)
+            // const myFunc = () => {
+                // let myNum;
+                // const nums = [1, 2, 3, 4]
+                // nums.forEach((num) => {
+                        // if (num === 4) {
+                            // myNum = num
+                        // }
+                // })
+                // return myNum
+            // }
+
+            // so you long story short you shouldn't use let here
+            // in fact you don't even need a variable at all since map returns an array 
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+            // https://www.youtube.com/watch?v=bCqtb-Z5YGQ <= his youtube channel is no longer, but really good content on there and he's fun
+
+            // so anyways here i would do:
+            // return prevState.map(blah blhalh)
            let newArray = prevState.map((recordEl) => {
                     if(recordEl.discogs_id === action.payload.discogs_id){
                         return {
@@ -97,6 +119,7 @@ function recordstoreReducer(prevState = defaultState.recordstore, action){
         case "ADD_TO_RECORDSTORE":
             return [...prevState, action.payload]
         case "UPDATE_RECORDSTORE":
+            // see prev note
             let newArray = prevState.map((recordEl) => {
                 if(recordEl.discogs_id === action.payload.discogs_id){
                     return {
