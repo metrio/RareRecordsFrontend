@@ -22,3 +22,29 @@ export const LOG_OUT = "LOG_OUT"
 export const OWNER_LOG_IN =  "OWNER_LOG_IN"
 export const RETURNING_OWNER = "RETURNING_OWNER"
 export const OWNER_LOG_OUT = "OWNER_LOG_OUT"
+
+// i fucking hate redux lol
+// for this you can also do 
+// export {SET_RECORDS, ADD_TO_RECORDS, etc.}
+// another option is to just make this one object, so:
+// const actionTypes = {
+    //  SET_RECORDS: "SET_RECORDS",
+    // etc.
+// }
+// or even better: 
+// const recordActionTypes = {
+   // SET_RECORDS: "SET_RECORDS",
+   // etc
+// }
+// const authACtionTypes = {
+    // blah
+// }
+// and then you can just export it as:
+// export default actionTypes (for method 1)
+// export {recordActionTypes, authActionTypes, etc}
+
+// THEN when you go to import it, instead of that crazy list you can just do:
+// (method 1) import actionTypes from 'actionTypes'
+// and use accordinginly: dispatch(actionTypes.SET_RECORDS, "blah")
+// (method 2) import {recordActionTypes} from 'actionTypes'
+// use: dispatch(recordActionTypes.SET_RECORDS, "blah")

@@ -11,6 +11,7 @@ import { createStore, applyMiddleware } from 'redux';
 
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
+// this should be an environment variable, usually REACT_LOCAL_DEV: or something
 export const URL = `http://localhost:3000`
 
 ReactDOM.render(
