@@ -1,70 +1,60 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import diver from '../assets/diver-silhouette.png'
-
-
 
 
 class HomePage extends React.Component  {
    
-
-     componentDidMount = () => {
-        const randomImgPlaceFn = this.randomImgPlace
-        let intervalId
-        intervalId = setInterval(randomImgPlaceFn, 6000)
-    }
-
-
     randomImgPlace = () => {
         const pics = this.props.records.map(record => record.thumb_url)
         const newPicArray = []
 
         for(let ii = 0; ii < pics.length; ii++){
-            const poistionTop= Math.random()*-300
+            const poistionTop = Math.random()*-300
             const positionRight = Math.random()*-300
 
             let zindex 
             let classname = ""
 
-            if(ii % 7 === 0){
+            if(ii % 7 === 0) {
                 classname = "img1"
                 zindex = Math.random()*10
-            }else if(ii % 7 === 1){
+            } else if(ii % 7 === 1) {
                 classname = "img2"
                 zindex = Math.random()*50
-            }else if(ii % 7 === 2){
+            } else if(ii % 7 === 2) {
                 classname = "img3"
                 zindex = Math.random()*30
-            }else if(ii % 7 === 3){
+            } else if(ii % 7 === 3) {
                 classname ="img4"
                 zindex =  Math.random()*15
-            }else if(ii % 7 === 4){
+            } else if(ii % 7 === 4) {
                 classname="img5"
                 zindex = Math.random()*40
-            }else if(ii % 7 === 5){
+            } else if(ii % 7 === 5) {
                 classname="img6"
                 zindex = Math.random()*25
-            }else if(ii % 7 === 6){
+            } else if(ii % 7 === 6) {
                 classname="img7"
                 zindex = Math.random()*22
             }
 
-       newPicArray.push(<img key={ii} className={classname} src={pics[ii]} style={{ top: `${poistionTop}px`, right: `${positionRight}px`, zIndex: `${zindex}`}} />)
-    }
+            newPicArray.push(<img key={ii} alt={pics[ii]} className={classname} src={pics[ii]} style={{ top: `${poistionTop}px`, right: `${positionRight}px`, zIndex: `${zindex}`}}  />)
+        }
 
-    return newPicArray
+
+        return newPicArray
     }
 
 
 render () {
-    let records = this.props.records
+    const records = this.props.records
    
 
     return (
         <span className="homepage">
                 { records !== undefined ?
                 <div className="records-array">
-                { this.randomImgPlace()}
+                { this.randomImgPlace() }
                 </div>
                 :
                 null

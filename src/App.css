@@ -337,9 +337,6 @@
     position: absolute;
   }
 
-
-
-
   .recordcard-div img{
     display: inline-block;
     align-self: center;
@@ -785,25 +782,25 @@
 }
 
 .tracklist{
-  width: 50vw;
+  width: 100%;
 }
 
 .tracklist li{
   display: inline-block;
   text-decoration: none;
-  width: 100%;
+  width: 50vw;
   border-bottom: .5px solid black;
   margin-bottom: 5px;
 }
 
 .left {
   float: left;
-  width: 50%;
+  width: 90%;
 }
 
 .right {
   float: right;
-  width: 50%;
+  width: auto;
 }
 
 
@@ -818,23 +815,22 @@
 }
 
 .sidebanner{
-  height: 90%; 
+  height: 100%; 
   width: 15vw; 
   position: fixed; 
-  z-index: 1; 
-  top: 125px;
-  left: 0;
-  background-color: #111; 
+  background-color: rgb(3, 3, 3); 
   overflow-x: hidden; 
   padding-top: 20px;
   float: right;
-  filter: blur(1px)
+
 }
 
 .storerecord-details {
-  display: inline-block;
-  position: fixed;
-  width: 30vw;
+  position: relative;
+  right: -17vw;
+  width: 80%;
+  height: 100%;
+  overflow: auto;
  }
  
  .recorddetail-page{

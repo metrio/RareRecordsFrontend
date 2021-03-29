@@ -4,32 +4,48 @@ import { connect } from 'react-redux';
 
 class RecordstoreRecordDetails extends React.Component {
 
+    capitalize = (string) => {
+        return (typeof string !== 'string' ? "" :  string.charAt(0).toUpperCase() + string.slice(1)) 
+    }
+
     fromDiscogs = () => {
         const recordObj = this.props.details
   
         if(recordObj === undefined){
            return null
         } else {
+            const stringBoolean = recordObj.official.toString()
+            const capitlizieBoolean = this.capitalize(stringBoolean)
+
           return (
             <>
                 
-                <p>
+                <p className="description">
+                    <h4>Description From Owner: </h4>
                     {recordObj.description}
+                    <h5>Condition:</h5>
+                    {recordObj.condition}
                 </p>
                 
                 <div className="basic-info">
+                    <div className="tracklist">
+                        <h6>Tracklist:</h6>
+                            {recordObj.tracklist.map(trackEl =><li key={trackEl.position}> <div key={trackEl.title} className="left" > {trackEl.title} </div>  <div className="right">  {trackEl.duration}</div> </li> )}
+                    </div>
+                   
                     <h6>Catalog No.</h6>
                         {recordObj.catno}
                     <h6>Country</h6>
                         {recordObj.country}
                     <h6>Year</h6>
-                        {recordObj.year}
-
+                        {recordObj.year_of_release === undefined ? "No Year Entered" : recordObj.year_of_release}
                     <h6>Format</h6>
-                    {recordObj.format}
-
+                        {recordObj.format}
                     <h6>Labels</h6>
-                    {recordObj.label}
+                        {recordObj.label}
+                    <h6>Official</h6>
+                        {capitlizieBoolean}
+                    {console.log(recordObj.official)}
                 </div>
                 
                 </>
@@ -70,7 +86,6 @@ class RecordstoreRecordDetails extends React.Component {
     render () {
         const details = this.props.details
         
-        console.log(details)
         return (
             <body className="recordstorerecord-body">
 
@@ -86,10 +101,9 @@ class RecordstoreRecordDetails extends React.Component {
                         </div>
 
                         <div className="storerecord-details">
-                            <div>
-                                <h3 className="title" >{details.album_name} - {details.artist_name}</h3>
-                            </div>
-                        
+                            
+                            <h2>{details.album_name} - {details.artist_name}</h2>
+                         
                             <div className="record-details">
                                 {this.fromDiscogs()}
                             </div>

@@ -68,8 +68,6 @@ class RecordDetails extends React.Component {
       
       label = (recordObj) => {
         const label = recordObj.label
-       
-  
         return label.map(ele => <li> { ele }</li>)
       }
   

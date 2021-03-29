@@ -19,6 +19,7 @@ import OwnerDiscogsSearch from './Containers/OwnerDiscogsSearch';
 import FormContainer from './Containers/FormContainer';
 
 
+
 class App extends React.Component {
   
   componentDidMount = () => {
@@ -141,6 +142,8 @@ class App extends React.Component {
             return(
               <OwnerLogInForm  submitHandler={this.ownerLoginHandler} routerProps={routerProps}/> )
           }} />          
+
+         
 
           <Route path="/" render={() => <HomePage />} />
 
